@@ -3,6 +3,7 @@ import HeroSection from './components/HeroSection';
 import StatsGridSection from './components/StatsGridSection';
 import SobreSection from './components/SobreSection';
 import PratosGridSection from './components/PratosGridSection';
+import ServicosCarouselSection from './components/ServicosCarouselSection';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <StatsGridSection />
       <SobreSection />
       <PratosGridSection />
+      <ServicosCarouselSection />
     </div>
   );
 }
