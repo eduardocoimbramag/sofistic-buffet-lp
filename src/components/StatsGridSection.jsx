@@ -50,6 +50,11 @@ const StatsGridSection = ({
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
           border-radius: 1.25rem;
           padding: 2rem 1.5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
@@ -85,6 +90,7 @@ const StatsGridSection = ({
           margin: 0.75rem 0 0;
           color: rgba(15, 23, 42, 0.75);
           font-family: sans-serif;
+          font-weight: 700;
           font-size: clamp(0.95rem, 1.5vw, 1.05rem);
           letter-spacing: 0.06em;
           text-transform: uppercase;
