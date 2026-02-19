@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const HeroSection = ({ 
-  title = "Buffet Elegance", 
+  title = "Sofistic Buffet", 
   slogan = "Sabores únicos para momentos especiais",
   className = ""
 }) => {
@@ -10,20 +10,19 @@ const HeroSection = ({
   const titleAnimation = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 1 }
+    transition: { delay: 0.5, duration: 1 }
   };
 
   const sloganAnimation = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    transition: { delay: 0.5, duration: 0.8 }
+    transition: { delay: 1, duration: 0.8 }
   };
 
   const heroStyles = {
     width: '100%',
     minHeight: '85vh',
     height: '100vh',
-    backgroundColor: '#000000',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,12 +57,47 @@ const HeroSection = ({
   };
 
   return (
-    <section 
+    <section
       style={heroStyles}
-      className={className}
+      className={`hero-section ${className}`}
       aria-label="Hero Section"
     >
-      <div style={containerStyles}>
+      <style>{`
+        .hero-section {
+          position: relative;
+          background-color: #000;
+          background-image: url('/herobg.webp');
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center top;
+        }
+
+        @media (min-width: 768px) {
+          .hero-section {
+            background-position: center center;
+          }
+        }
+
+        .hero-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.70) 45%,
+            rgba(0, 0, 0, 0.75) 100%
+          );
+          pointer-events: none;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 1;
+        }
+      `}</style>
+
+      <div style={containerStyles} className="hero-content">
         {/* Título Principal */}
         <motion.h1
           style={titleStyles}

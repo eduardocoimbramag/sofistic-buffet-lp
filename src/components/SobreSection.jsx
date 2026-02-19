@@ -3,16 +3,18 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 
 const SobreSection = ({
-  region = 'Sua Região',
-  title = 'Buffet de Luxo para Eventos Exclusivos em',
+  region = '',
+  title = 'BUFFET COM ALTO PADRÃO GASTRONÔMICO',
   description =
-    'Somos especialistas em criar experiências gastronômicas memoráveis com execução impecável, estética sofisticada e atendimento premium do primeiro contato ao último brinde.',
+    'O Sofistic Buffet é referência em buffet para eventos em Recife e Região Metropolitana do Recife, oferecendo soluções completas para eventos corporativos, casamentos, coffee breaks, feiras, congressos e celebrações sociais. Nossa missão é servir com excelência, superar expectativas e proporcionar experiências gastronômicas memoráveis para cada cliente.',
   highlights = [
-    'Atendimento consultivo e personalizado',
-    'Cardápios autorais com ingredientes selecionados',
-    'Estrutura completa para eventos sociais e corporativos'
+    'Estrutura preparada para buffet corporativo, eventos sociais, confraternizações empresariais e celebrações especiais',
+    'Planejamento completo de buffet para eventos, incluindo logística, montagem, serviço e suporte especializado',
+    'Mais de 5 mil eventos realizados com padrão elevado de qualidade gastronômica e operacional',
+    'Expertise consolidada em buffet itinerante com atuação em casamentos, eventos empresariais, coffee break, feiras e congressos',
+    'Equipe profissional qualificada em hospitalidade, manipulação segura de alimentos e atendimento para eventos de diferentes portes'
   ],
-  ctaLabel = 'Conheça nosso portfólio',
+  ctaLabel = 'SOLICITE UM ORÇAMENTO',
   ctaHref = '#',
   videoSrc = 'https://www.w3schools.com/html/mov_bbb.mp4',
   videoPoster = 'https://www.w3schools.com/html/pic_trulli.jpg',
@@ -56,6 +58,15 @@ const SobreSection = ({
     initial: { opacity: 0, y: 16 },
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: 0.7, delay: 0.1 }
+  };
+
+  const handleCtaClick = (e) => {
+    const targetId = 'orcamento';
+    const el = document.getElementById(targetId);
+    if (!el) return;
+
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -122,6 +133,12 @@ const SobreSection = ({
           font-size: 1.05rem;
           line-height: 1.75;
           margin: 0;
+          text-align: justify;
+          text-indent: 2.5em;
+          hyphens: none;
+          -webkit-hyphens: none;
+          overflow-wrap: normal;
+          word-break: normal;
         }
 
         .about-list {
@@ -142,24 +159,28 @@ const SobreSection = ({
         }
 
         .about-cta {
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           margin-top: 1.5rem;
+          align-self: center;
           color: ${colors.white};
           text-decoration: none;
           font-family: sans-serif;
           letter-spacing: 0.04em;
           text-transform: uppercase;
           font-weight: 600;
-          padding-bottom: 0.2rem;
-          background-image: linear-gradient(${colors.gold}, ${colors.gold});
-          background-repeat: no-repeat;
-          background-position: 0 100%;
-          background-size: 0% 2px;
-          transition: background-size 220ms ease;
+          padding: 0.85rem 1.25rem;
+          border-radius: 999px;
+          border: 1px solid rgba(227, 217, 146, 0.55);
+          background: rgba(227, 217, 146, 0.12);
+          transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
         }
 
         .about-cta:hover {
-          background-size: 100% 2px;
+          transform: translateY(-1px);
+          border-color: rgba(227, 217, 146, 0.8);
+          background: rgba(227, 217, 146, 0.18);
         }
 
         .about-cta:focus-visible {
@@ -248,7 +269,7 @@ const SobreSection = ({
               ))}
             </ul>
 
-            <a className="about-cta" href={ctaHref}>
+            <a className="about-cta" href={ctaHref} onClick={handleCtaClick}>
               {ctaLabel}
             </a>
           </motion.div>

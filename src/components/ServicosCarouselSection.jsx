@@ -192,16 +192,38 @@ export default function ServicosCarouselSection({
       const safeLabel = String(label || '').trim();
       const initials = safeLabel ? safeLabel.slice(0, 2).toUpperCase() : 'SB';
 
+      const seed = Array.from(safeLabel).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+      const hue = seed % 360;
+      const hue2 = (hue + 28) % 360;
+      const hue3 = (hue + 70) % 360;
+
       const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360" viewBox="0 0 600 360">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1a1a1a"/>
-      <stop offset="1" stop-color="#0d0d0d"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(${hue}, 35%, 18%)"/>
+      <stop offset="1" stop-color="hsl(${hue2}, 35%, 10%)"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="rgba(255,255,255,0.00)"/>
+      <stop offset="0.45" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0.00)"/>
     </linearGradient>
   </defs>
-  <rect x="2" y="2" width="92" height="92" rx="18" fill="url(#g)" stroke="#e3d992" stroke-opacity="0.55" stroke-width="2"/>
-  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="#e3d992" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="1">${initials}</text>
+  <rect x="2" y="2" width="596" height="356" rx="26" fill="url(#bg)" stroke="#e3d992" stroke-opacity="0.45" stroke-width="2"/>
+
+  <circle cx="100" cy="90" r="62" fill="hsl(${hue3}, 45%, 22%)" opacity="0.85"/>
+  <circle cx="160" cy="120" r="52" fill="hsl(${hue2}, 40%, 18%)" opacity="0.75"/>
+  <circle cx="520" cy="78" r="86" fill="hsl(${hue}, 40%, 16%)" opacity="0.7"/>
+
+  <rect x="18" y="18" width="564" height="110" rx="22" fill="url(#shine)" opacity="0.9"/>
+
+  <rect x="38" y="230" width="524" height="90" rx="22" fill="rgba(0,0,0,0.25)" stroke="rgba(227,217,146,0.22)"/>
+  <text x="70" y="280" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700" opacity="0.95">${safeLabel}</text>
+  <text x="70" y="312" fill="rgba(255,255,255,0.75)" font-family="Arial, sans-serif" font-size="18">Preview do serviço</text>
+
+  <rect x="468" y="248" width="72" height="72" rx="18" fill="rgba(0,0,0,0.35)" stroke="rgba(227,217,146,0.35)"/>
+  <text x="504" y="292" text-anchor="middle" dominant-baseline="middle" fill="#e3d992" font-family="Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="1">${initials}</text>
 </svg>`;
 
       return `data:image/svg+xml,${encodeURIComponent(svg)}`;
@@ -260,11 +282,12 @@ export default function ServicosCarouselSection({
           border: 1px solid rgba(227, 217, 146, 0.25);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
           border-radius: 1.25rem;
-          padding: 2rem 1.5rem;
-          min-height: 10rem;
+          padding: 1.25rem 1.25rem 1.5rem;
+          min-height: 18rem;
           display: flex;
-          align-items: center;
-          justify-content: center;
+          flex-direction: column;
+          align-items: stretch;
+          justify-content: flex-start;
           text-align: center;
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
@@ -280,14 +303,23 @@ export default function ServicosCarouselSection({
         }
 
         .servicos-card-media {
-          width: 3.75rem;
-          height: 3.75rem;
-          border-radius: 0.9rem;
+          width: 100%;
+          height: 8.5rem;
+          border-radius: 1rem;
           display: block;
-          margin: 0 auto 0.9rem;
+          margin: 0 0 1rem;
           object-fit: cover;
           border: 1px solid rgba(227, 217, 146, 0.3);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .servicos-card-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 0 0.25rem;
         }
 
         .servicos-card-title {
@@ -353,7 +385,11 @@ export default function ServicosCarouselSection({
           }
 
           .servicos-card {
-            min-height: 11rem;
+            min-height: 19rem;
+          }
+
+          .servicos-card-media {
+            height: 9rem;
           }
         }
 
@@ -363,6 +399,14 @@ export default function ServicosCarouselSection({
             --visibleGaps: 2;
             --cardW: 19.5rem;
             --gap: 1.5rem;
+          }
+
+          .servicos-card {
+            min-height: 20rem;
+          }
+
+          .servicos-card-media {
+            height: 9.5rem;
           }
         }
 
@@ -404,14 +448,14 @@ export default function ServicosCarouselSection({
                   className={`servicos-card${isActive ? ' is-active' : ''}`}
                   aria-label={item.title}
                 >
-                  <div>
-                    <img
-                      className="servicos-card-media"
-                      src={getPlaceholderImageSrc(item.title)}
-                      alt=""
-                      loading="lazy"
-                      draggable={false}
-                    />
+                  <img
+                    className="servicos-card-media"
+                    src={getPlaceholderImageSrc(item.title)}
+                    alt=""
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  <div className="servicos-card-body">
                     <h3 className="servicos-card-title">{item.title}</h3>
                     <p className="servicos-card-desc">{item.description}</p>
                   </div>
