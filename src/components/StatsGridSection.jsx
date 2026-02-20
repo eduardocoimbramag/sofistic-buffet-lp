@@ -11,6 +11,10 @@ const StatsGridSection = ({
   const sectionStyles = {
     width: '100%',
     backgroundColor: '#ffffff',
+    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(${process.env.PUBLIC_URL}/statsbg.webp)`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     padding: '4rem 1.5rem'
   };
 

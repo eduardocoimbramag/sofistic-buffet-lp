@@ -29,7 +29,10 @@ const SobreSection = ({
 
   const sectionStyles = {
     width: '100%',
-    backgroundColor: colors.black,
+    backgroundColor: '#1C1C1C',
+    backgroundImage: `url(${process.env.PUBLIC_URL}/protruding-squares.svg)`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: '119px 119px',
     padding: '3rem clamp(1.5rem, 4vw, 4rem)'
   };
 
