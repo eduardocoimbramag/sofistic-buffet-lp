@@ -116,14 +116,15 @@ const SobreSection = ({
           }
 
           .about-title {
-            grid-column: 1;
+            grid-column: 1 / -1;
             grid-row: 1;
-            justify-self: end;
+            justify-self: center;
+            text-align: center;
           }
 
           .about-media {
             grid-column: 2;
-            grid-row: 1 / span 2;
+            grid-row: 2;
             justify-self: start;
           }
 
@@ -140,8 +141,14 @@ const SobreSection = ({
           font-weight: 700;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          font-size: clamp(1.75rem, 4.5vw, 3rem);
+          font-size: clamp(1.5rem, 3.6vw, 2.5rem);
           margin: 0;
+          text-align: center;
+        }
+
+        .about-content {
+          display: flex;
+          flex-direction: column;
         }
 
         .about-description {
@@ -181,6 +188,8 @@ const SobreSection = ({
           justify-content: center;
           margin-top: 1.5rem;
           align-self: center;
+          margin-left: auto;
+          margin-right: auto;
           color: ${colors.white};
           text-decoration: none;
           font-family: sans-serif;
