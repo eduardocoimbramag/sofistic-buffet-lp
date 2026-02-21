@@ -17,8 +17,8 @@ function App() {
       />
       <StatsGridSection />
       <SobreSection />
-      <PratosGridSection />
       <ServicosCarouselSection />
+      <PratosGridSection />
       <FormularioSection />
       <RodapeSection />
     </div>
