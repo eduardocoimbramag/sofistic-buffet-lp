@@ -3,14 +3,14 @@ import React from 'react';
 const PratosGridSection = ({
   title = 'Pratos & Estações',
   items = [
-    'Coqueteis',
-    'Crepe',
-    'Feijoada',
-    'Sushi',
-    'Ilha de Caldinhos',
-    'Salgados',
-    'Churrasco',
-    'Petiscos de Boteco'
+    { title: 'Churrasco', image: `${process.env.PUBLIC_URL}/churrasco-card.webp` },
+    { title: 'Crepe', image: `${process.env.PUBLIC_URL}/crepe-card.webp` },
+    { title: 'Feijoada', image: `${process.env.PUBLIC_URL}/feijoada-card.webp` },
+    { title: 'Sushi', image: `${process.env.PUBLIC_URL}/sushi-card.webp` },
+    { title: 'Petiscos de Boteco', image: `${process.env.PUBLIC_URL}/petiscoboteco-card.webp` },
+    { title: 'Ilha de Caldinhos', image: `${process.env.PUBLIC_URL}/ilhadecaldinho-card.jpeg` },
+    { title: 'Coqueteis', image: `${process.env.PUBLIC_URL}/coquetel-card.webp` },
+    { title: 'Salgados', image: `${process.env.PUBLIC_URL}/salgados-card.webp` }
   ],
   className = ''
 }) => {
@@ -76,12 +76,17 @@ const PratosGridSection = ({
         }
 
         .pratos-card {
-          background: rgba(255, 255, 255, 0.06);
+          position: relative;
+          overflow: hidden;
+          background-color: rgba(255, 255, 255, 0.06);
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           border: 1px solid rgba(227, 217, 146, 0.25);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
           border-radius: 1.25rem;
-          padding: 2rem 1.5rem;
-          min-height: 8.5rem;
+          padding: 2.25rem 1.5rem;
+          min-height: 10.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -89,6 +94,22 @@ const PratosGridSection = ({
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+        }
+
+        .pratos-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.72)
+          );
+          pointer-events: none;
+        }
+
+        .pratos-card > * {
+          position: relative;
+          z-index: 1;
         }
 
         .pratos-card:hover {
@@ -111,7 +132,7 @@ const PratosGridSection = ({
           margin: 0;
           color: ${colors.white};
           font-family: sans-serif;
-          font-weight: 600;
+          font-weight: 700;
           letter-spacing: 0.06em;
           text-transform: uppercase;
           line-height: 1.3;
@@ -125,9 +146,13 @@ const PratosGridSection = ({
         </header>
 
         <div className="pratos-grid">
-          {items.map((text, idx) => (
-            <article key={`${idx}-${text}`} className="pratos-card">
-              <h3 className="pratos-card-title">{text}</h3>
+          {items.map((item, idx) => (
+            <article
+              key={`${idx}-${item.title}`}
+              className="pratos-card"
+              style={{ backgroundImage: `url(${item.image})` }}
+            >
+              <h3 className="pratos-card-title">{item.title}</h3>
             </article>
           ))}
         </div>
