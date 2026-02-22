@@ -181,7 +181,7 @@ export default function ServicosCarouselSection({
 
   const containerStyles = useMemo(
     () => ({
-      maxWidth: '64rem',
+      maxWidth: '80rem',
       margin: '0 auto',
     }),
     []
@@ -241,6 +241,22 @@ export default function ServicosCarouselSection({
           align-items: center;
           justify-content: center;
           text-align: center;
+        }
+
+        .servicos-panel {
+          background: rgba(0, 0, 0, 0.925);
+          border: 1px solid ${colors.gold};
+          border-radius: 1.25rem;
+          padding: 1rem 0.75rem;
+          max-width: 74rem;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+          .servicos-panel {
+            padding: 1.25rem 1rem;
+          }
         }
 
         .servicos-title {
@@ -423,55 +439,57 @@ export default function ServicosCarouselSection({
       `}</style>
 
       <div style={containerStyles}>
-        <header className="servicos-header">
-          <h2 className="servicos-title">{title}</h2>
-        </header>
+        <div className="servicos-panel">
+          <header className="servicos-header">
+            <h2 className="servicos-title">{title}</h2>
+          </header>
 
-        <div ref={viewportRef} className="servicos-viewport">
-          <motion.div
-            className="servicos-track"
-            drag="x"
-            dragMomentum={false}
-            onDragEnd={onDragEnd}
-            animate={controls}
-            initial={false}
-            style={{ x: 0 }}
-            aria-label="Carrossel de serviços"
-          >
-            {virtualItems.map((item, idx) => {
-              const isActive = idx === virtualIndex;
+          <div ref={viewportRef} className="servicos-viewport">
+            <motion.div
+              className="servicos-track"
+              drag="x"
+              dragMomentum={false}
+              onDragEnd={onDragEnd}
+              animate={controls}
+              initial={false}
+              style={{ x: 0 }}
+              aria-label="Carrossel de serviços"
+            >
+              {virtualItems.map((item, idx) => {
+                const isActive = idx === virtualIndex;
 
-              return (
-                <article
-                  key={`${item.title}-${idx}`}
-                  ref={idx === 0 ? slotMeasureRef : null}
-                  className={`servicos-card${isActive ? ' is-active' : ''}`}
-                  aria-label={item.title}
-                >
-                  <img
-                    className="servicos-card-media"
-                    src={getPlaceholderImageSrc(item.title)}
-                    alt=""
-                    loading="lazy"
-                    draggable={false}
-                  />
-                  <div className="servicos-card-body">
-                    <h3 className="servicos-card-title">{item.title}</h3>
-                    <p className="servicos-card-desc">{item.description}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </motion.div>
-        </div>
+                return (
+                  <article
+                    key={`${item.title}-${idx}`}
+                    ref={idx === 0 ? slotMeasureRef : null}
+                    className={`servicos-card${isActive ? ' is-active' : ''}`}
+                    aria-label={item.title}
+                  >
+                    <img
+                      className="servicos-card-media"
+                      src={getPlaceholderImageSrc(item.title)}
+                      alt=""
+                      loading="lazy"
+                      draggable={false}
+                    />
+                    <div className="servicos-card-body">
+                      <h3 className="servicos-card-title">{item.title}</h3>
+                      <p className="servicos-card-desc">{item.description}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </motion.div>
+          </div>
 
-        <div className="servicos-controls" aria-label="Controles do carrossel">
-          <button type="button" className="servicos-btn" onClick={goPrev} aria-label="Anterior">
-            Voltar
-          </button>
-          <button type="button" className="servicos-btn" onClick={goNext} aria-label="Próximo">
-            Avançar
-          </button>
+          <div className="servicos-controls" aria-label="Controles do carrossel">
+            <button type="button" className="servicos-btn" onClick={goPrev} aria-label="Anterior">
+              Voltar
+            </button>
+            <button type="button" className="servicos-btn" onClick={goNext} aria-label="Próximo">
+              Avançar
+            </button>
+          </div>
         </div>
       </div>
     </section>

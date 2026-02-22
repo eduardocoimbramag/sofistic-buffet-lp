@@ -30,7 +30,7 @@ const SobreSection = ({
   const sectionStyles = {
     width: '100%',
     backgroundColor: 'transparent',
-    padding: '3rem clamp(1.5rem, 4vw, 4rem)'
+    padding: '2.25rem clamp(1.5rem, 4vw, 4rem)'
   };
 
   const containerStyles = {
@@ -78,8 +78,8 @@ const SobreSection = ({
       <style>{`
         @media (min-width: 768px) {
           .about-section {
-            padding-top: 6rem;
-            padding-bottom: 6rem;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
           }
         }
 
@@ -87,7 +87,7 @@ const SobreSection = ({
           background: rgba(0, 0, 0, 0.925);
           border: 1px solid ${colors.gold};
           border-radius: 1.25rem;
-          padding: 2rem 1.5rem;
+          padding: 1rem 0.75rem;
           max-width: 74rem;
           margin-left: auto;
           margin-right: auto;
@@ -95,7 +95,7 @@ const SobreSection = ({
 
         @media (min-width: 768px) {
           .about-panel {
-            padding: 2.5rem 2rem;
+            padding: 1.25rem 1rem;
           }
         }
 
@@ -172,15 +172,15 @@ const SobreSection = ({
         .about-list {
           list-style: none;
           padding: 0;
-          margin: 1.5rem 0 0;
+          margin: 1.1rem 0 0;
           display: grid;
-          gap: 0.9rem;
+          gap: 0.65rem;
         }
 
         .about-list-item {
           display: flex;
           align-items: flex-start;
-          gap: 0.75rem;
+          gap: 0.6rem;
           color: rgba(255, 255, 255, 0.90);
           font-family: sans-serif;
           line-height: 1.6;
@@ -190,7 +190,7 @@ const SobreSection = ({
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          margin-top: 1.5rem;
+          margin-top: 1.1rem;
           align-self: center;
           margin-left: auto;
           margin-right: auto;
@@ -200,7 +200,7 @@ const SobreSection = ({
           letter-spacing: 0.04em;
           text-transform: uppercase;
           font-weight: 600;
-          padding: 0.85rem 1.25rem;
+          padding: 0.7rem 1.1rem;
           border-radius: 999px;
           border: 1px solid rgba(227, 217, 146, 0.55);
           background: rgba(227, 217, 146, 0.12);
