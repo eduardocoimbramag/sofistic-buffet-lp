@@ -173,7 +173,7 @@ export default function ServicosCarouselSection({
   const sectionStyles = useMemo(
     () => ({
       width: '100%',
-      background: colors.black,
+      backgroundColor: 'transparent',
       padding: '4rem 1.5rem',
     }),
     [colors.black]

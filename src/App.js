@@ -16,8 +16,10 @@ function App() {
         slogan="Servimos com excelência"
       />
       <StatsGridSection />
-      <SobreSection />
-      <ServicosCarouselSection />
+      <div className="bg-sobre-servicos">
+        <SobreSection />
+        <ServicosCarouselSection />
+      </div>
       <PratosGridSection />
       <FormularioSection />
       <RodapeSection />
