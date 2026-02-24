@@ -3,32 +3,44 @@ import { motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 
 const defaultItems = [
   {
+    title: 'Buffet e Catering',
+    description:
+      'Buffet para eventos sociais e corporativos com catering completo, alta gastronomia e apresentação impecável. Experiências que encantam e fortalecem sua marca.',
+  },
+  {
     title: 'Almoço',
-    description: 'Ideal para encontros corporativos e celebrações.',
+    description:
+      'Almoço para eventos sociais e corporativos, com cardápios personalizados e serviço de excelência. Ideal para receber bem em qualquer ocasião.',
   },
   {
     title: 'Brunch',
-    description: 'Opções leves e sofisticadas para seu evento.',
+    description:
+      'Brunch sofisticado para eventos sociais e corporativos. Leve, elegante e perfeito para encontros especiais, reuniões e networking.',
   },
   {
     title: 'Casamento',
-    description: 'Experiência completa com apresentação premium.',
+    description:
+      'Buffet para casamento com gastronomia refinada e atendimento impecável. Cada detalhe pensado para tornar seu grande dia inesquecível.',
   },
   {
-    title: 'Mesa de antepastos',
-    description: 'Seleção refinada para recepções e coquetéis.',
+    title: 'Mesa de Antepastos',
+    description:
+      'Mesa de antepastos premium para eventos sociais e corporativos. Sofisticação, variedade e apresentação que encantam à primeira vista.',
   },
   {
     title: 'Coffee Break',
-    description: 'Praticidade e elegância para sua agenda.',
+    description:
+      'Coffee break em Recife ideal para eventos corporativos e sociais. Opções gourmet, serviço ágil e apresentação elegante.',
   },
   {
-    title: 'Drinks para eventos',
-    description: 'Coquetelaria com serviço profissional.',
+    title: 'Drinks para Eventos',
+    description:
+      'Bar de drinks para eventos sociais e corporativos. Coquetelaria profissional que transforma momentos em experiências memoráveis.',
   },
   {
-    title: 'Buffet e catering',
-    description: 'Soluções sob medida para qualquer formato.',
+    title: 'Buffet para Stand',
+    description:
+      'Buffet para stand com serviço estratégico para feiras e eventos corporativos. Atraia visitantes, gere conexão e valorize sua marca com uma experiência diferenciada.',
   },
 ];
 
@@ -56,6 +68,12 @@ export default function ServicosCarouselSection({
   const [itemWidth, setItemWidth] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
   const [virtualIndex, setVirtualIndex] = useState(items.length);
+
+  const activeIndex = useMemo(() => {
+    const n = items.length;
+    if (!n) return 0;
+    return ((virtualIndex % n) + n) % n;
+  }, [items.length, virtualIndex]);
 
   const virtualItems = useMemo(() => {
     const safe = Array.isArray(items) ? items : [];
@@ -360,28 +378,55 @@ export default function ServicosCarouselSection({
           gap: 0.75rem;
         }
 
-        .servicos-btn {
+        .servicos-arrow-btn {
           appearance: none;
-          border: 1px solid rgba(227, 217, 146, 0.35);
-          background: rgba(255, 255, 255, 0.04);
-          color: ${colors.white};
+          width: 44px;
+          height: 44px;
           border-radius: 999px;
-          padding: 0.75rem 1.1rem;
-          font-weight: 600;
-          letter-spacing: 0.01em;
+          border: 1px solid ${colors.gold};
+          background: ${colors.gold};
+          color: ${colors.white};
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
-          transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+          transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
         }
 
-        .servicos-btn:hover {
+        .servicos-arrow-btn:hover {
           transform: translateY(-1px);
-          border-color: rgba(227, 217, 146, 0.55);
-          background: rgba(255, 255, 255, 0.06);
+          filter: brightness(1.02);
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
         }
 
-        .servicos-btn:focus-visible {
+        .servicos-arrow-btn:active {
+          transform: translateY(0px) scale(0.99);
+        }
+
+        .servicos-arrow-btn:focus-visible {
           outline: 2px solid ${colors.gold};
-          outline-offset: 3px;
+          outline-offset: 4px;
+        }
+
+        .servicos-dots {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.45rem;
+          min-height: 44px;
+        }
+
+        .servicos-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.95);
+          opacity: 0.85;
+        }
+
+        .servicos-dot.is-active {
+          background: ${colors.gold};
+          opacity: 1;
         }
 
         /* Mobile-first sizing */
@@ -428,7 +473,7 @@ export default function ServicosCarouselSection({
 
         @media (prefers-reduced-motion: reduce) {
           .servicos-card,
-          .servicos-btn {
+          .servicos-arrow-btn {
             transition: none;
           }
 
@@ -483,11 +528,25 @@ export default function ServicosCarouselSection({
           </div>
 
           <div className="servicos-controls" aria-label="Controles do carrossel">
-            <button type="button" className="servicos-btn" onClick={goPrev} aria-label="Anterior">
-              Voltar
+            <button type="button" className="servicos-arrow-btn" onClick={goPrev} aria-label="Anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
-            <button type="button" className="servicos-btn" onClick={goNext} aria-label="Próximo">
-              Avançar
+
+            <div className="servicos-dots" aria-label="Progresso do carrossel">
+              {items.map((_, i) => (
+                <span
+                  key={`dot-${i}`}
+                  className={`servicos-dot${i === activeIndex ? ' is-active' : ''}`}
+                />
+              ))}
+            </div>
+
+            <button type="button" className="servicos-arrow-btn" onClick={goNext} aria-label="Próximo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
         </div>

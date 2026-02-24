@@ -37,7 +37,17 @@ export default function FormularioSection({
     const next = {};
 
     if (!values.name.trim()) next.name = 'Informe seu nome.';
-    if (!values.phone.trim()) next.phone = 'Informe seu telefone.';
+
+    const digits = String(values.phone || '').replace(/\D/g, '');
+    if (!digits) next.phone = 'Informe seu telefone.';
+    else if (digits.length < 10) next.phone = 'Informe um telefone válido (DDD + número).';
+    else if (digits.length === 10) {
+      // DDD (2) + número (8)
+    } else if (digits.length === 11) {
+      // DDD (2) + número (9)
+    } else {
+      next.phone = 'Informe um telefone válido (DDD + 8 ou 9 dígitos).';
+    }
     if (!values.email.trim()) next.email = 'Informe seu e-mail.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
       next.email = 'Informe um e-mail válido.';
@@ -45,8 +55,10 @@ export default function FormularioSection({
 
     if (!values.eventType) next.eventType = 'Selecione o tipo de evento.';
 
-    const qty = Number(values.quantity);
-    if (!values.quantity) next.quantity = 'Informe o quantitativo.';
+    const qtyDigits = String(values.quantity || '').replace(/\D/g, '');
+    const qty = Number(qtyDigits);
+    if (!qtyDigits) next.quantity = 'Informe o quantitativo.';
+    else if (qtyDigits.length > 5) next.quantity = 'Use até 5 dígitos.';
     else if (!Number.isFinite(qty) || qty < 1) next.quantity = 'Use um número válido (mínimo 1).';
 
     if (!values.consent) next.consent = 'É necessário autorizar o contato para prosseguir.';
@@ -61,6 +73,30 @@ export default function FormularioSection({
     setValues((prev) => ({
       ...prev,
       [key]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const setDigitsField = (key, maxLen) => (e) => {
+    const digits = String(e.target.value || '').replace(/\D/g, '').slice(0, maxLen);
+    setValues((prev) => ({
+      ...prev,
+      [key]: digits,
+    }));
+  };
+
+  const setPhoneMasked = (e) => {
+    const digits = String(e.target.value || '').replace(/\D/g, '').slice(0, 11);
+    const ddd = digits.slice(0, 2);
+    const rest = digits.slice(2);
+
+    let formatted = '';
+    if (digits.length === 0) formatted = '';
+    else if (digits.length <= 2) formatted = `(${ddd}`;
+    else formatted = `(${ddd}) ${rest}`;
+
+    setValues((prev) => ({
+      ...prev,
+      phone: formatted,
     }));
   };
 
@@ -91,12 +127,17 @@ export default function FormularioSection({
       setSubmitting(true);
       setSubmitResult('');
 
+      const digits = String(values.phone || '').replace(/\D/g, '');
+      const dddDigits = digits.slice(0, 2);
+      const phoneDigits = digits.slice(2);
+      const qtyDigits = String(values.quantity || '').replace(/\D/g, '');
+
       const payload = {
         name: values.name.trim(),
-        phone: values.phone.trim(),
+        phone: `(${dddDigits}) ${phoneDigits}`.trim(),
         email: values.email.trim(),
         eventType: values.eventType,
-        quantity: Number(values.quantity),
+        quantity: Number(qtyDigits),
         description: values.description.trim(),
         consent: Boolean(values.consent),
       };
@@ -201,6 +242,11 @@ export default function FormularioSection({
           gap: 0.45rem;
         }
 
+        .field-compact {
+          max-width: 14rem;
+          justify-self: start;
+        }
+
         .form-label {
           color: rgba(255, 255, 255, 0.9);
           font-weight: 600;
@@ -250,6 +296,12 @@ export default function FormularioSection({
           padding: 1rem;
         }
 
+        .form-fieldset.is-compact {
+          width: fit-content;
+          max-width: 100%;
+          justify-self: start;
+        }
+
         .form-legend {
           padding: 0 0.5rem;
           color: rgba(255, 255, 255, 0.9);
@@ -262,6 +314,7 @@ export default function FormularioSection({
           display: flex;
           flex-wrap: wrap;
           gap: 0.75rem;
+          justify-content: flex-start;
         }
 
         .form-radio {
@@ -273,6 +326,7 @@ export default function FormularioSection({
           border: 1px solid rgba(227, 217, 146, 0.2);
           background: rgba(0, 0, 0, 0.22);
           color: rgba(255, 255, 255, 0.92);
+          width: fit-content;
         }
 
         .form-radio input {
@@ -283,11 +337,26 @@ export default function FormularioSection({
           display: flex;
           align-items: flex-start;
           gap: 0.7rem;
-          padding: 0.95rem 1rem;
+          padding: 0.75rem 0.9rem;
           border-radius: 1rem;
           background: rgba(0, 0, 0, 0.22);
           border: 1px solid rgba(227, 217, 146, 0.18);
           color: rgba(255, 255, 255, 0.92);
+        }
+
+        .form-consent.is-compact {
+          width: fit-content;
+          max-width: 100%;
+        }
+
+        .form-consent-wrap {
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        .form-consent span {
+          line-height: 1.35;
+          font-size: 0.95rem;
         }
 
         .form-consent input {
@@ -303,21 +372,36 @@ export default function FormularioSection({
 
         .form-btn {
           appearance: none;
-          border: 1px solid rgba(227, 217, 146, 0.55);
-          background: rgba(227, 217, 146, 0.12);
+          border: 1px solid ${colors.gold};
+          background: ${colors.gold};
           color: ${colors.white};
           border-radius: 999px;
           padding: 0.85rem 1.35rem;
           font-weight: 700;
           letter-spacing: 0.02em;
           cursor: pointer;
-          transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+          position: relative;
+          overflow: hidden;
+          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+        }
+
+        .form-btn::before {
+          content: '';
+          position: absolute;
+          inset: -40% -60%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          transform: translateX(-60%) rotate(12deg);
+          transition: transform 450ms ease;
         }
 
         .form-btn:hover {
           transform: translateY(-1px);
-          border-color: rgba(227, 217, 146, 0.8);
-          background: rgba(227, 217, 146, 0.18);
+          filter: brightness(1.02);
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+        }
+
+        .form-btn:hover::before {
+          transform: translateX(60%) rotate(12deg);
         }
 
         .form-btn:focus-visible {
@@ -329,6 +413,8 @@ export default function FormularioSection({
           opacity: 0.55;
           cursor: not-allowed;
           transform: none;
+          box-shadow: none;
+          filter: none;
         }
 
         .form-result {
@@ -363,6 +449,10 @@ export default function FormularioSection({
           .form-btn {
             transition: none;
           }
+
+          .form-btn::before {
+            transition: none;
+          }
         }
       `}</style>
 
@@ -395,16 +485,18 @@ export default function FormularioSection({
                 )}
               </div>
 
-              <div className="form-field">
+              <div className="form-field field-compact">
                 <label className="form-label" htmlFor="orc-phone">Telefone</label>
                 <input
                   id="orc-phone"
                   className="form-input"
                   type="tel"
                   autoComplete="tel"
+                  inputMode="numeric"
+                  maxLength={15}
                   required
                   value={values.phone}
-                  onChange={setField('phone')}
+                  onChange={setPhoneMasked}
                   onBlur={markTouched('phone')}
                   aria-invalid={showError('phone')}
                   aria-describedby={showError('phone') ? 'orc-phone-err' : undefined}
@@ -437,17 +529,17 @@ export default function FormularioSection({
                 )}
               </div>
 
-              <div className="form-field">
+              <div className="form-field field-compact">
                 <label className="form-label" htmlFor="orc-qty">Quantitativo</label>
                 <input
                   id="orc-qty"
                   className="form-input"
-                  type="number"
-                  min={1}
-                  step={1}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={5}
                   required
                   value={values.quantity}
-                  onChange={setField('quantity')}
+                  onChange={setDigitsField('quantity', 5)}
                   onBlur={markTouched('quantity')}
                   aria-invalid={showError('quantity')}
                   aria-describedby={showError('quantity') ? 'orc-qty-err' : undefined}
@@ -459,7 +551,7 @@ export default function FormularioSection({
                 )}
               </div>
 
-              <fieldset className="form-fieldset span-2">
+              <fieldset className="form-fieldset span-2 is-compact">
                 <legend className="form-legend">Tipo de evento</legend>
                 <div className="form-options" onBlur={markTouched('eventType')}>
                   <label className="form-radio">
@@ -505,8 +597,8 @@ export default function FormularioSection({
                 />
               </div>
 
-              <div className="span-2">
-                <label className="form-consent">
+              <div className="span-2 form-consent-wrap">
+                <label className="form-consent is-compact">
                   <input
                     type="checkbox"
                     required

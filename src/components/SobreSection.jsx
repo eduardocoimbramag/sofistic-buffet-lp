@@ -202,15 +202,30 @@ const SobreSection = ({
           font-weight: 600;
           padding: 0.7rem 1.1rem;
           border-radius: 999px;
-          border: 1px solid rgba(227, 217, 146, 0.55);
-          background: rgba(227, 217, 146, 0.12);
-          transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+          border: 1px solid ${colors.gold};
+          background: ${colors.gold};
+          position: relative;
+          overflow: hidden;
+          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+        }
+
+        .about-cta::before {
+          content: '';
+          position: absolute;
+          inset: -40% -60%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          transform: translateX(-60%) rotate(12deg);
+          transition: transform 450ms ease;
         }
 
         .about-cta:hover {
           transform: translateY(-1px);
-          border-color: rgba(227, 217, 146, 0.8);
-          background: rgba(227, 217, 146, 0.18);
+          filter: brightness(1.02);
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+        }
+
+        .about-cta:hover::before {
+          transform: translateX(60%) rotate(12deg);
         }
 
         .about-cta:focus-visible {
