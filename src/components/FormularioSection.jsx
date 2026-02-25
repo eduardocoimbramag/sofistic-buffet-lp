@@ -269,7 +269,7 @@ export default function FormularioSection({
 
         .form-textarea {
           resize: vertical;
-          min-height: 7.5rem;
+          min-height: 3rem;
         }
 
         .form-input::placeholder,
@@ -300,6 +300,25 @@ export default function FormularioSection({
           width: fit-content;
           max-width: 100%;
           justify-self: start;
+        }
+
+        .right-block {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .eventtype-fieldset {
+          width: fit-content;
+          max-width: 100%;
+        }
+
+        .eventtype-options {
+          margin-top: 0.6rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.85rem;
+          align-items: flex-start;
         }
 
         .form-legend {
@@ -352,6 +371,23 @@ export default function FormularioSection({
         .form-consent-wrap {
           display: flex;
           justify-content: flex-start;
+        }
+
+        .form-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          flex-wrap: wrap;
+        }
+
+        .form-footer .form-consent-wrap {
+          flex: 1 1 auto;
+        }
+
+        .form-footer .form-actions {
+          margin-top: 0;
+          justify-content: flex-end;
         }
 
         .form-consent span {
@@ -430,12 +466,52 @@ export default function FormularioSection({
           }
 
           .form-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: minmax(0, 1fr) auto;
             gap: 1.15rem;
           }
 
           .span-2 {
             grid-column: 1 / -1;
+          }
+
+          .right-block {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            display: grid;
+            grid-template-columns: minmax(0, 14rem) auto;
+            grid-template-rows: auto auto;
+            column-gap: 0.95rem;
+            row-gap: 1.15rem;
+            align-items: start;
+          }
+
+          .right-block .right-phone {
+            grid-column: 1;
+            grid-row: 1;
+          }
+
+          .right-block .right-qty {
+            grid-column: 1;
+            grid-row: 2;
+          }
+
+          .right-block .eventtype-fieldset {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            align-self: start;
+          }
+
+          .form-footer {
+            flex-wrap: nowrap;
+            align-items: center;
+          }
+
+          .form-footer .form-consent-wrap {
+            flex: 1;
+          }
+
+          .form-footer .form-actions {
+            flex: 0 0 auto;
           }
 
           .form-actions {
@@ -485,27 +561,85 @@ export default function FormularioSection({
                 )}
               </div>
 
-              <div className="form-field field-compact">
-                <label className="form-label" htmlFor="orc-phone">Telefone</label>
-                <input
-                  id="orc-phone"
-                  className="form-input"
-                  type="tel"
-                  autoComplete="tel"
-                  inputMode="numeric"
-                  maxLength={15}
-                  required
-                  value={values.phone}
-                  onChange={setPhoneMasked}
-                  onBlur={markTouched('phone')}
-                  aria-invalid={showError('phone')}
-                  aria-describedby={showError('phone') ? 'orc-phone-err' : undefined}
-                />
-                {showError('phone') && (
-                  <div id="orc-phone-err" className="form-error" role="alert">
-                    {errors.phone}
+              <div className="right-block">
+                <div className="form-field field-compact right-phone">
+                  <label className="form-label" htmlFor="orc-phone">Telefone</label>
+                  <input
+                    id="orc-phone"
+                    className="form-input"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="numeric"
+                    maxLength={15}
+                    required
+                    value={values.phone}
+                    onChange={setPhoneMasked}
+                    onBlur={markTouched('phone')}
+                    aria-invalid={showError('phone')}
+                    aria-describedby={showError('phone') ? 'orc-phone-err' : undefined}
+                  />
+                  {showError('phone') && (
+                    <div id="orc-phone-err" className="form-error" role="alert">
+                      {errors.phone}
+                    </div>
+                  )}
+                </div>
+
+                <fieldset className="form-fieldset eventtype-fieldset" aria-label="Tipo de evento">
+                  <legend className="form-legend">Tipo de evento</legend>
+                  <div className="eventtype-options" onBlur={markTouched('eventType')}>
+                    <label className="form-radio">
+                      <input
+                        type="radio"
+                        name="orc-eventType"
+                        value="pessoal"
+                        required
+                        checked={values.eventType === 'pessoal'}
+                        onChange={setField('eventType')}
+                      />
+                      Pessoal
+                    </label>
+
+                    <label className="form-radio">
+                      <input
+                        type="radio"
+                        name="orc-eventType"
+                        value="corporativo"
+                        checked={values.eventType === 'corporativo'}
+                        onChange={setField('eventType')}
+                      />
+                      Corporativo
+                    </label>
                   </div>
-                )}
+
+                  {showError('eventType') && (
+                    <div className="form-error" role="alert">
+                      {errors.eventType}
+                    </div>
+                  )}
+                </fieldset>
+
+                <div className="form-field field-compact right-qty">
+                  <label className="form-label" htmlFor="orc-qty">Quantitativo</label>
+                  <input
+                    id="orc-qty"
+                    className="form-input"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    required
+                    value={values.quantity}
+                    onChange={setDigitsField('quantity', 5)}
+                    onBlur={markTouched('quantity')}
+                    aria-invalid={showError('quantity')}
+                    aria-describedby={showError('quantity') ? 'orc-qty-err' : undefined}
+                  />
+                  {showError('quantity') && (
+                    <div id="orc-qty-err" className="form-error" role="alert">
+                      {errors.quantity}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="form-field">
@@ -529,62 +663,6 @@ export default function FormularioSection({
                 )}
               </div>
 
-              <div className="form-field field-compact">
-                <label className="form-label" htmlFor="orc-qty">Quantitativo</label>
-                <input
-                  id="orc-qty"
-                  className="form-input"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={5}
-                  required
-                  value={values.quantity}
-                  onChange={setDigitsField('quantity', 5)}
-                  onBlur={markTouched('quantity')}
-                  aria-invalid={showError('quantity')}
-                  aria-describedby={showError('quantity') ? 'orc-qty-err' : undefined}
-                />
-                {showError('quantity') && (
-                  <div id="orc-qty-err" className="form-error" role="alert">
-                    {errors.quantity}
-                  </div>
-                )}
-              </div>
-
-              <fieldset className="form-fieldset span-2 is-compact">
-                <legend className="form-legend">Tipo de evento</legend>
-                <div className="form-options" onBlur={markTouched('eventType')}>
-                  <label className="form-radio">
-                    <input
-                      type="radio"
-                      name="orc-eventType"
-                      value="pessoal"
-                      required
-                      checked={values.eventType === 'pessoal'}
-                      onChange={setField('eventType')}
-                    />
-                    Pessoal
-                  </label>
-
-                  <label className="form-radio">
-                    <input
-                      type="radio"
-                      name="orc-eventType"
-                      value="corporativo"
-                      checked={values.eventType === 'corporativo'}
-                      onChange={setField('eventType')}
-                    />
-                    Corporativo
-                  </label>
-                </div>
-
-                {showError('eventType') && (
-                  <div className="form-error" role="alert">
-                    {errors.eventType}
-                  </div>
-                )}
-              </fieldset>
-
               <div className="form-field span-2">
                 <label className="form-label" htmlFor="orc-desc">Descrição</label>
                 <textarea
@@ -597,33 +675,35 @@ export default function FormularioSection({
                 />
               </div>
 
-              <div className="span-2 form-consent-wrap">
-                <label className="form-consent is-compact">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={values.consent}
-                    onChange={setField('consent')}
-                    onBlur={markTouched('consent')}
-                    aria-invalid={showError('consent')}
-                    aria-describedby={showError('consent') ? 'orc-consent-err' : undefined}
-                  />
-                  <span>
-                    Autorizo o contato para fins comerciais conforme a Política de Privacidade
-                  </span>
-                </label>
-                {showError('consent') && (
-                  <div id="orc-consent-err" className="form-error" role="alert">
-                    {errors.consent}
-                  </div>
-                )}
-              </div>
-            </div>
+              <div className="span-2 form-footer">
+                <div className="form-consent-wrap">
+                  <label className="form-consent is-compact">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={values.consent}
+                      onChange={setField('consent')}
+                      onBlur={markTouched('consent')}
+                      aria-invalid={showError('consent')}
+                      aria-describedby={showError('consent') ? 'orc-consent-err' : undefined}
+                    />
+                    <span>
+                      Autorizo o contato para fins comerciais conforme a Política de Privacidade
+                    </span>
+                  </label>
+                  {showError('consent') && (
+                    <div id="orc-consent-err" className="form-error" role="alert">
+                      {errors.consent}
+                    </div>
+                  )}
+                </div>
 
-            <div className="form-actions">
-              <button className="form-btn" type="submit" disabled={submitting}>
-                {submitting ? 'Enviando...' : 'Enviar'}
-              </button>
+                <div className="form-actions">
+                  <button className="form-btn" type="submit" disabled={submitting}>
+                    {submitting ? 'Enviando...' : 'Enviar'}
+                  </button>
+                </div>
+              </div>
             </div>
 
             {submitResult && <div className="form-result">{submitResult}</div>}

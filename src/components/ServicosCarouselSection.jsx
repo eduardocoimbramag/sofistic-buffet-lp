@@ -199,7 +199,7 @@ export default function ServicosCarouselSection({
 
   const containerStyles = useMemo(
     () => ({
-      maxWidth: '80rem',
+      maxWidth: '64rem',
       margin: '0 auto',
     }),
     []
@@ -259,22 +259,6 @@ export default function ServicosCarouselSection({
           align-items: center;
           justify-content: center;
           text-align: center;
-        }
-
-        .servicos-panel {
-          background: rgba(0, 0, 0, 0.925);
-          border: 1px solid ${colors.gold};
-          border-radius: 1.25rem;
-          padding: 1rem 0.75rem;
-          max-width: 74rem;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        @media (min-width: 768px) {
-          .servicos-panel {
-            padding: 1.25rem 1rem;
-          }
         }
 
         .servicos-title {
@@ -484,71 +468,79 @@ export default function ServicosCarouselSection({
       `}</style>
 
       <div style={containerStyles}>
-        <div className="servicos-panel">
-          <header className="servicos-header">
-            <h2 className="servicos-title">{title}</h2>
-          </header>
+        <header className="servicos-header">
+          <h2 className="servicos-title">{title}</h2>
+        </header>
 
-          <div ref={viewportRef} className="servicos-viewport">
-            <motion.div
-              className="servicos-track"
-              drag="x"
-              dragMomentum={false}
-              onDragEnd={onDragEnd}
-              animate={controls}
-              initial={false}
-              style={{ x: 0 }}
-              aria-label="Carrossel de serviços"
-            >
-              {virtualItems.map((item, idx) => {
-                const isActive = idx === virtualIndex;
+        <div ref={viewportRef} className="servicos-viewport">
+          <motion.div
+            className="servicos-track"
+            drag="x"
+            dragMomentum={false}
+            onDragEnd={onDragEnd}
+            animate={controls}
+            initial={false}
+            style={{ x: 0 }}
+            aria-label="Carrossel de serviços"
+          >
+            {virtualItems.map((item, idx) => {
+              const isActive = idx === virtualIndex;
 
-                return (
-                  <article
-                    key={`${item.title}-${idx}`}
-                    ref={idx === 0 ? slotMeasureRef : null}
-                    className={`servicos-card${isActive ? ' is-active' : ''}`}
-                    aria-label={item.title}
-                  >
-                    <img
-                      className="servicos-card-media"
-                      src={getPlaceholderImageSrc(item.title)}
-                      alt=""
-                      loading="lazy"
-                      draggable={false}
-                    />
-                    <div className="servicos-card-body">
-                      <h3 className="servicos-card-title">{item.title}</h3>
-                      <p className="servicos-card-desc">{item.description}</p>
-                    </div>
-                  </article>
-                );
-              })}
-            </motion.div>
+              return (
+                <article
+                  key={`${item.title}-${idx}`}
+                  ref={idx === 0 ? slotMeasureRef : null}
+                  className={`servicos-card${isActive ? ' is-active' : ''}`}
+                  aria-label={item.title}
+                >
+                  <img
+                    className="servicos-card-media"
+                    src={getPlaceholderImageSrc(item.title)}
+                    alt=""
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  <div className="servicos-card-body">
+                    <h3 className="servicos-card-title">{item.title}</h3>
+                    <p className="servicos-card-desc">{item.description}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        <div className="servicos-controls" aria-label="Controles do carrossel">
+          <button
+            type="button"
+            className="servicos-arrow-btn"
+            onClick={goPrev}
+            aria-label="Anterior"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <div className="servicos-dots" aria-label="Progresso do carrossel">
+            {items.map((_, i) => (
+              <span
+                key={i}
+                className={`servicos-dot${i === activeIndex ? ' is-active' : ''}`}
+              />
+            ))}
           </div>
 
-          <div className="servicos-controls" aria-label="Controles do carrossel">
-            <button type="button" className="servicos-arrow-btn" onClick={goPrev} aria-label="Anterior">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            <div className="servicos-dots" aria-label="Progresso do carrossel">
-              {items.map((_, i) => (
-                <span
-                  key={`dot-${i}`}
-                  className={`servicos-dot${i === activeIndex ? ' is-active' : ''}`}
-                />
-              ))}
-            </div>
-
-            <button type="button" className="servicos-arrow-btn" onClick={goNext} aria-label="Próximo">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
+          <button
+            type="button"
+            className="servicos-arrow-btn"
+            onClick={goNext}
+            aria-label="Próximo"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

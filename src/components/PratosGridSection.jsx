@@ -9,7 +9,7 @@ const PratosGridSection = ({
     { title: 'Sushi', image: `${process.env.PUBLIC_URL}/sushi-card.webp` },
     { title: 'Petiscos de Boteco', image: `${process.env.PUBLIC_URL}/petiscoboteco-card.webp` },
     { title: 'Ilha de Caldinhos', image: `${process.env.PUBLIC_URL}/ilhadecaldinho-card.jpeg` },
-    { title: 'Coqueteis', image: `${process.env.PUBLIC_URL}/coquetel-card.webp` },
+    { title: 'Drinks', image: `${process.env.PUBLIC_URL}/coquetel-card.webp` },
     { title: 'Salgados', image: `${process.env.PUBLIC_URL}/salgados-card.webp` }
   ],
   className = ''

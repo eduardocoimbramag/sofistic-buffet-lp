@@ -6,6 +6,7 @@ import PratosGridSection from './components/PratosGridSection';
 import ServicosCarouselSection from './components/ServicosCarouselSection';
 import FormularioSection from './components/FormularioSection';
 import RodapeSection from './components/RodapeSection';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <PratosGridSection />
       <FormularioSection />
       <RodapeSection />
+      <WhatsAppFloatingButton />
     </div>
   );
 }
