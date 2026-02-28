@@ -148,17 +148,23 @@ export default function ServicosCarouselSection({
     async (nextIndex) => {
       if (!itemSize || !itemWidth || !viewportWidth) return;
 
-      const normalized = recenterIfNeeded(nextIndex);
-      setVirtualIndex(normalized);
+      const targetIndex = nextIndex;
+      setVirtualIndex(targetIndex);
 
       const centerOffset = (viewportWidth - itemWidth) / 2;
 
       await controls.start({
-        x: -normalized * itemSize + centerOffset,
+        x: -targetIndex * itemSize + centerOffset,
         transition: prefersReducedMotion
           ? { duration: 0 }
           : { type: 'spring', stiffness: 180, damping: 26, mass: 0.9 },
       });
+
+      const normalized = recenterIfNeeded(targetIndex);
+      if (normalized !== targetIndex) {
+        setVirtualIndex(normalized);
+        controls.set({ x: -normalized * itemSize + centerOffset });
+      }
     },
     [controls, itemSize, itemWidth, prefersReducedMotion, recenterIfNeeded, viewportWidth]
   );
@@ -343,7 +349,6 @@ export default function ServicosCarouselSection({
         }
 
         .servicos-card.is-active {
-          transform: scale(1.08);
           border-color: rgba(227, 217, 146, 0.9);
           box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
           z-index: 2;
