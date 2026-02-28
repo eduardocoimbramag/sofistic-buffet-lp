@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 
 export default function RodapeSection({
-  brandName = 'Buffet Elegance',
-  tagline = 'Sabores únicos para momentos especiais.',
+  brandName = 'Sofistic Buffet',
+  tagline = 'Servimos com excelência',
   links = [
     { label: 'Início', href: '#top' },
     { label: 'Quem Somos', href: '#sobre' },
@@ -10,9 +10,9 @@ export default function RodapeSection({
     { label: 'Serviços', href: '#servicos' },
     { label: 'Orçamento', href: '#orcamento' },
   ],
-  phone = '(11) 99999-9999',
-  email = 'contato@buffetelegance.com',
-  location = 'São Paulo - SP',
+  phone = '(81) 989328-4279',
+  email = 'xxx@gmail.com',
+  location = 'Recife - PE',
   className = '',
 }) {
   const colors = useMemo(

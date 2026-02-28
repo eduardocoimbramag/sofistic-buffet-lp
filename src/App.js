@@ -20,9 +20,9 @@ function App() {
       <div className="bg-sobre-servicos">
         <SobreSection />
         <ServicosCarouselSection />
+        <FormularioSection />
       </div>
       <PratosGridSection />
-      <FormularioSection />
       <RodapeSection />
       <WhatsAppFloatingButton />
     </div>

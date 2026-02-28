@@ -170,10 +170,10 @@ export default function FormularioSection({
   const sectionStyles = useMemo(
     () => ({
       width: '100%',
-      background: colors.black,
+      background: 'transparent',
       padding: '4rem 1.5rem',
     }),
-    [colors.black]
+    []
   );
 
   const containerStyles = useMemo(
@@ -221,8 +221,8 @@ export default function FormularioSection({
         }
 
         .form-card {
-          background: ${colors.glassBg};
-          border: 1px solid ${colors.glassBorder};
+          background: rgba(0, 0, 0, 0.925);
+          border: 1px solid ${colors.gold};
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
           border-radius: 1.25rem;
           padding: 1.75rem 1.25rem;

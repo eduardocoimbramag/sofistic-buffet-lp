@@ -23,7 +23,7 @@ const defaultItems = [
       'Buffet para casamento com gastronomia refinada e atendimento impecável. Cada detalhe pensado para tornar seu grande dia inesquecível.',
   },
   {
-    title: 'Mesa de Antepastos',
+    title: 'Mesa de Frios',
     description:
       'Mesa de antepastos premium para eventos sociais e corporativos. Sofisticação, variedade e apresentação que encantam à primeira vista.',
   },
@@ -33,9 +33,9 @@ const defaultItems = [
       'Coffee break em Recife ideal para eventos corporativos e sociais. Opções gourmet, serviço ágil e apresentação elegante.',
   },
   {
-    title: 'Drinks para Eventos',
+    title: 'Eventos de Grande Porte',
     description:
-      'Bar de drinks para eventos sociais e corporativos. Coquetelaria profissional que transforma momentos em experiências memoráveis.',
+      'Estrutura completa para eventos de grande porte com planejamento e execução impecáveis. Soluções sob medida para grandes celebrações e eventos corporativos.',
   },
   {
     title: 'Buffet para Stand',
@@ -249,6 +249,35 @@ export default function ServicosCarouselSection({
     []
   );
 
+  const getServiceImageSrc = useCallback(
+    (title) => {
+      const imageByTitle = {
+        'Almoço': 'Almoço.webp',
+        'Brunch': 'Brunch.webp',
+        'Buffet e Catering': 'Buffet-e-Catering.webp',
+        'Buffet para Stand': 'Buffet-para-Stand.webp',
+        'Casamento': 'Casamento.webp',
+        'Coffee Break': 'Coffee-Break.webp',
+        'Eventos de Grande Porte': 'Eventos-de-Grande-Porte.webp',
+        'Mesa de Frios': 'Mesa-de-Frios.webp',
+      };
+
+      const fileName = imageByTitle[String(title || '').trim()];
+      if (!fileName) return getPlaceholderImageSrc(title);
+      return `${process.env.PUBLIC_URL}/${fileName}`;
+    },
+    [getPlaceholderImageSrc]
+  );
+
+  const handleCtaClick = useCallback((e) => {
+    const targetId = 'orcamento';
+    const el = document.getElementById(targetId);
+    if (!el) return;
+
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
   return (
     <section style={sectionStyles} className={className} aria-label="Serviços">
       <style>{`
@@ -296,8 +325,8 @@ export default function ServicosCarouselSection({
         .servicos-card {
           flex: 0 0 var(--cardW);
           margin-right: var(--gap);
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(227, 217, 146, 0.25);
+          background: rgba(0, 0, 0, 0.925);
+          border: 1px solid ${colors.gold};
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
           border-radius: 1.25rem;
           padding: 1.25rem 1.25rem 1.5rem;
@@ -315,7 +344,7 @@ export default function ServicosCarouselSection({
 
         .servicos-card.is-active {
           transform: scale(1.08);
-          border-color: rgba(227, 217, 146, 0.5);
+          border-color: rgba(227, 217, 146, 0.9);
           box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
           z-index: 2;
         }
@@ -353,6 +382,55 @@ export default function ServicosCarouselSection({
           color: rgba(255, 255, 255, 0.82);
           font-size: 0.95rem;
           line-height: 1.35;
+        }
+
+        .servicos-card-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 1rem;
+          align-self: center;
+          margin-left: auto;
+          margin-right: auto;
+          color: ${colors.white};
+          text-decoration: none;
+          font-family: sans-serif;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 0.82rem;
+          padding: 0.55rem 0.95rem;
+          border-radius: 999px;
+          border: 1px solid ${colors.gold};
+          background: ${colors.gold};
+          position: relative;
+          overflow: hidden;
+          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+        }
+
+        .servicos-card-cta::before {
+          content: '';
+          position: absolute;
+          inset: -40% -60%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          transform: translateX(-60%) rotate(12deg);
+          transition: transform 450ms ease;
+        }
+
+        .servicos-card-cta:hover {
+          transform: translateY(-1px);
+          filter: brightness(1.02);
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+        }
+
+        .servicos-card-cta:hover::before {
+          transform: translateX(60%) rotate(12deg);
+        }
+
+        .servicos-card-cta:focus-visible {
+          outline: 2px solid ${colors.gold};
+          outline-offset: 4px;
+          border-radius: 0.25rem;
         }
 
         .servicos-controls {
@@ -495,15 +573,23 @@ export default function ServicosCarouselSection({
                 >
                   <img
                     className="servicos-card-media"
-                    src={getPlaceholderImageSrc(item.title)}
-                    alt=""
+                    src={getServiceImageSrc(item.title)}
+                    alt={item.title}
                     loading="lazy"
                     draggable={false}
+                    onError={(e) => {
+                      if (e.currentTarget.dataset.fallbackApplied) return;
+                      e.currentTarget.dataset.fallbackApplied = '1';
+                      e.currentTarget.src = getPlaceholderImageSrc(item.title);
+                    }}
                   />
                   <div className="servicos-card-body">
                     <h3 className="servicos-card-title">{item.title}</h3>
                     <p className="servicos-card-desc">{item.description}</p>
                   </div>
+                  <a className="servicos-card-cta" href="#orcamento" onClick={handleCtaClick}>
+                    Solicite um orçamento
+                  </a>
                 </article>
               );
             })}
