@@ -194,14 +194,11 @@ export default function ServicosCarouselSection({
     [animateToIndex, itemSize, itemWidth, viewportWidth, virtualIndex]
   );
 
-  const sectionStyles = useMemo(
-    () => ({
-      width: '100%',
-      backgroundColor: 'transparent',
-      padding: '4rem 1.5rem',
-    }),
-    [colors.black]
-  );
+  const sectionStyles = {
+    width: '100%',
+    backgroundColor: 'transparent',
+    padding: '4rem 1.5rem',
+  };
 
   const containerStyles = useMemo(
     () => ({

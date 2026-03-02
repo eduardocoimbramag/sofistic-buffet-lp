@@ -17,7 +17,12 @@ function App() {
         slogan="Servimos com excelência"
       />
       <StatsGridSection />
-      <div className="bg-sobre-servicos">
+      <div
+        className="bg-sobre-servicos"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), url(${process.env.PUBLIC_URL}/backgroundsec3-4-5.jpg)`,
+        }}
+      >
         <SobreSection />
         <ServicosCarouselSection />
         <FormularioSection />

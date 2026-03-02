@@ -11,7 +11,7 @@ export default function RodapeSection({
     { label: 'Orçamento', href: '#orcamento' },
   ],
   phone = '(81) 989328-4279',
-  email = 'xxx@gmail.com',
+  email = 'sofisticbuffet.recife@gmail.com',
   location = 'Recife - PE',
   className = '',
 }) {
