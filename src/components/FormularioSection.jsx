@@ -145,8 +145,26 @@ export default function FormularioSection({
       if (onSubmit) {
         await onSubmit(payload);
       } else {
-        // fallback: no-op (landing page)
-        await Promise.resolve();
+        const endpoint =
+          process.env.REACT_APP_GAS_WEBAPP_URL ||
+          'https://script.google.com/macros/s/AKfycbzFuoYFQPP61Rk7qa86TWeCM-9wUH0bzhWHClU3owQHQGWlYQlaDmKpuFbZJk_7pac6Tg/exec';
+
+        await fetch(endpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: payload.name,
+            telefone: payload.phone,
+            email: payload.email,
+            tipoEvento: payload.eventType,
+            quantitativo: String(payload.quantity ?? ''),
+            descricao: payload.description,
+            consentimento: payload.consent,
+          }),
+        });
       }
 
       setSubmitResult('Enviado com sucesso! Em breve entraremos em contato.');
@@ -160,8 +178,9 @@ export default function FormularioSection({
         consent: false,
       });
       setTouched({});
-    } catch (_err) {
-      setSubmitResult('Não foi possível enviar agora. Tente novamente em instantes.');
+    } catch (err) {
+      console.error(err);
+      setSubmitResult(err?.message || 'Não foi possível enviar agora. Tente novamente em instantes.');
     } finally {
       setSubmitting(false);
     }
