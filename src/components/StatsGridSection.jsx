@@ -2,7 +2,7 @@ import React from 'react';
 
 const StatsGridSection = ({
   items = [
-    { value: '+300', label: 'Eventos Realizados' },
+    { value: '+3.000', label: 'Eventos Realizados' },
     { value: '+50.000', label: 'Clientes Servidos' },
     { value: '+100', label: 'Empresas Atendidas' }
   ],

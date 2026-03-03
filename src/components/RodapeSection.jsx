@@ -10,7 +10,7 @@ export default function RodapeSection({
     { label: 'Serviços', href: '#servicos' },
     { label: 'Orçamento', href: '#orcamento' },
   ],
-  phone = '(81) 989328-4279',
+  phone = '(81) 98328-4279',
   email = 'sofisticbuffet.recife@gmail.com',
   location = 'Recife - PE',
   className = '',

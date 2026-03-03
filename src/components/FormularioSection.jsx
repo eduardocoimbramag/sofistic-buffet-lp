@@ -611,12 +611,12 @@ export default function FormularioSection({
                       <input
                         type="radio"
                         name="orc-eventType"
-                        value="pessoal"
+                        value="social"
                         required
-                        checked={values.eventType === 'pessoal'}
+                        checked={values.eventType === 'social'}
                         onChange={setField('eventType')}
                       />
-                      Pessoal
+                      Social
                     </label>
 
                     <label className="form-radio">

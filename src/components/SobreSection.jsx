@@ -10,7 +10,7 @@ const SobreSection = ({
   highlights = [
     'Estrutura preparada para buffet corporativo, eventos sociais, confraternizações empresariais e celebrações especiais',
     'Planejamento completo de buffet para eventos, incluindo logística, montagem, serviço e suporte especializado',
-    'Mais de 5 mil eventos realizados com padrão elevado de qualidade gastronômica e operacional',
+    'Mais de 3 mil eventos realizados com padrão elevado de qualidade gastronômica e operacional',
     'Expertise consolidada em buffet itinerante com atuação em casamentos, eventos empresariais, coffee break, feiras e congressos',
     'Equipe profissional qualificada em hospitalidade, manipulação segura de alimentos e atendimento para eventos de diferentes portes'
   ],
