@@ -109,6 +109,19 @@ export default function FormularioSection({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const antiSpamKey = 'sofistic:lastFormSubmitAtMs';
+    const antiSpamWindowMs = 2 * 60 * 60 * 1000;
+
+    try {
+      const lastSubmitAtMs = Number(window.localStorage.getItem(antiSpamKey) || '0');
+      if (lastSubmitAtMs && Date.now() - lastSubmitAtMs < antiSpamWindowMs) {
+        setSubmitResult('Você já enviou uma solicitação recentemente. Aguarde 2 horas para enviar novamente.');
+        return;
+      }
+    } catch (_err) {
+      // ignore localStorage issues
+    }
+
     setTouched({
       name: true,
       phone: true,
@@ -173,6 +186,12 @@ export default function FormularioSection({
           value: 1.0,
           currency: 'BRL',
         });
+      }
+
+      try {
+        window.localStorage.setItem(antiSpamKey, String(Date.now()));
+      } catch (_err) {
+        // ignore localStorage issues
       }
 
       setSubmitResult('Enviado com sucesso! Em breve entraremos em contato.');
