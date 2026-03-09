@@ -167,6 +167,14 @@ export default function FormularioSection({
         });
       }
 
+      if (window.gtag) {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-17997920049/YMvJCL7J-oMcELHuiYZD',
+          value: 1.0,
+          currency: 'BRL',
+        });
+      }
+
       setSubmitResult('Enviado com sucesso! Em breve entraremos em contato.');
       setValues({
         name: '',
