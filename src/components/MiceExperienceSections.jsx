@@ -221,7 +221,7 @@ export default function MiceExperienceSections() {
 
         .mice-copy {
           margin: 1.25rem 0 0;
-          max-width: 680px;
+          max-width: 100%;
           color: rgba(255,255,255,0.78);
           font-size: 1.02rem;
           line-height: 1.95;
@@ -234,7 +234,8 @@ export default function MiceExperienceSections() {
         }
 
         .mice-stand-intro {
-          max-width: 880px;
+          text-align: center;
+          max-width: 100%;
         }
 
         .mice-highlights {
@@ -242,7 +243,7 @@ export default function MiceExperienceSections() {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 0.9rem;
           margin-top: 1.9rem;
-          max-width: 700px;
+          max-width: 100%;
         }
 
         .mice-highlight-box {
@@ -471,7 +472,7 @@ export default function MiceExperienceSections() {
                 <div className="mice-highlight-box">
                   <div className="mice-highlight-title">Operação premium</div>
                   <div className="mice-highlight-text">
-                    Estrutura preparada para feiras, exposições e ações comerciais de alto impacto.
+                    Estrutura preparada para feiras, exposições e ações comerciais impactantes.
                   </div>
                 </div>
               </div>
