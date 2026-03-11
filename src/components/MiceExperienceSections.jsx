@@ -14,7 +14,7 @@ import {
 
 const standExperienceCards = [
   {
-    title: 'Mais tempo de permanência no seu stand',
+    title: 'Permanência no seu stand',
     icon: BriefcaseBusiness,
     eyebrow: 'Engajamento',
     description: 'Crie uma experiência gastronômica que convida o público a permanecer mais tempo e interagir com sua marca.',
@@ -109,6 +109,16 @@ export default function MiceExperienceSections() {
         viewport: { once: true, amount: 0.18 },
         transition: { duration: 0.6, ease: 'easeOut' },
       };
+
+  const handleScrollToForm = () => {
+    const formSection = document.getElementById('orcamento');
+    if (formSection) {
+      formSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
 
   return (
     <section aria-label="Experiência MICE e estrutura corporativa" className="mice-sections-shell">
@@ -363,7 +373,7 @@ export default function MiceExperienceSections() {
         }
 
         .mice-card-stand {
-          min-height: 320px;
+          min-height: 450px;
         }
 
         .mice-card-footer {
@@ -374,6 +384,13 @@ export default function MiceExperienceSections() {
           color: #e3d992;
           font-size: 0.88rem;
           font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .mice-card-footer:hover {
+          color: #f2e7a8;
+          transform: translateX(4px);
         }
 
         .mice-card-line {
@@ -435,7 +452,7 @@ export default function MiceExperienceSections() {
           }
 
           .mice-card-stand {
-            min-height: 260px;
+            min-height: 380px;
           }
         }
       `}</style>
@@ -500,8 +517,8 @@ export default function MiceExperienceSections() {
                       </div>
                     </div>
 
-                    <div className="mice-card-footer">
-                      <span>Impacto estratégico</span>
+                    <div className="mice-card-footer" onClick={handleScrollToForm}>
+                      <span>Solicitar orçamento</span>
                       <span className="mice-card-line" />
                     </div>
                   </article>
