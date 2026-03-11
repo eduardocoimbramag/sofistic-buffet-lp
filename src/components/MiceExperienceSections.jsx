@@ -233,6 +233,10 @@ export default function MiceExperienceSections() {
           align-items: start;
         }
 
+        .mice-stand-intro {
+          max-width: 880px;
+        }
+
         .mice-highlights {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -271,7 +275,7 @@ export default function MiceExperienceSections() {
         }
 
         .mice-grid-stand {
-          margin-top: 0.25rem;
+          margin-top: 2rem;
         }
 
         .mice-grid-structure {
@@ -283,7 +287,7 @@ export default function MiceExperienceSections() {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          min-height: 250px;
+          min-height: 100%;
           overflow: hidden;
           border-radius: 26px;
           border: 1px solid rgba(255,255,255,0.08);
@@ -357,6 +361,10 @@ export default function MiceExperienceSections() {
           line-height: 1.8;
         }
 
+        .mice-card-stand {
+          min-height: 320px;
+        }
+
         .mice-card-footer {
           margin-top: 1.75rem;
           display: flex;
@@ -402,10 +410,6 @@ export default function MiceExperienceSections() {
             padding: 7rem 2.25rem;
           }
 
-          .mice-hero-grid {
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr);
-          }
-
           .mice-grid-stand {
             grid-template-columns: repeat(4, minmax(0, 1fr));
           }
@@ -428,6 +432,10 @@ export default function MiceExperienceSections() {
           .mice-card {
             min-height: 220px;
           }
+
+          .mice-card-stand {
+            min-height: 260px;
+          }
         }
       `}</style>
 
@@ -441,7 +449,7 @@ export default function MiceExperienceSections() {
           className="mice-panel"
         >
           <div className="mice-hero-grid">
-            <div>
+            <div className="mice-stand-intro">
               <span className="mice-badge">MICE Experience</span>
               <h2 id="experiencia-no-stand-title" className="mice-heading">
                 Experiência no Stand
@@ -468,37 +476,37 @@ export default function MiceExperienceSections() {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="mice-grid mice-grid-stand">
-              {standExperienceCards.map((card, index) => {
-                const Icon = card.icon;
+          <div className="mice-grid mice-grid-stand">
+            {standExperienceCards.map((card, index) => {
+              const Icon = card.icon;
 
-                return (
-                  <RevealCard key={card.title} delay={index * 0.08}>
-                    <article className="mice-card">
-                      <div>
-                        <div className="mice-card-top">
-                          <div className="mice-icon-wrap">
-                            <Icon size={26} strokeWidth={1.9} />
-                          </div>
-                          <span className="mice-card-tag">{card.eyebrow}</span>
+              return (
+                <RevealCard key={card.title} delay={index * 0.08}>
+                  <article className="mice-card mice-card-stand">
+                    <div>
+                      <div className="mice-card-top">
+                        <div className="mice-icon-wrap">
+                          <Icon size={26} strokeWidth={1.9} />
                         </div>
-
-                        <div className="mice-card-body">
-                          <h3 className="mice-card-title">{card.title}</h3>
-                          <p className="mice-card-description">{card.description}</p>
-                        </div>
+                        <span className="mice-card-tag">{card.eyebrow}</span>
                       </div>
 
-                      <div className="mice-card-footer">
-                        <span>Impacto estratégico</span>
-                        <span className="mice-card-line" />
+                      <div className="mice-card-body">
+                        <h3 className="mice-card-title">{card.title}</h3>
+                        <p className="mice-card-description">{card.description}</p>
                       </div>
-                    </article>
-                  </RevealCard>
-                );
-              })}
-            </div>
+                    </div>
+
+                    <div className="mice-card-footer">
+                      <span>Impacto estratégico</span>
+                      <span className="mice-card-line" />
+                    </div>
+                  </article>
+                </RevealCard>
+              );
+            })}
           </div>
         </motion.section>
 
