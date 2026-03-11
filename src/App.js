@@ -5,6 +5,7 @@ import SobreSection from './components/SobreSection';
 import PratosGridSection from './components/PratosGridSection';
 import ServicosCarouselSection from './components/ServicosCarouselSection';
 import FormularioSection from './components/FormularioSection';
+import MiceExperienceSections from './components/MiceExperienceSections';
 import RodapeSection from './components/RodapeSection';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import './App.css';
@@ -27,6 +28,7 @@ function App() {
         <ServicosCarouselSection />
         <FormularioSection />
       </div>
+      <MiceExperienceSections />
       <PratosGridSection />
       <RodapeSection />
       <WhatsAppFloatingButton />
