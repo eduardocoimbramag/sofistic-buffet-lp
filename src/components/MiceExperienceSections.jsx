@@ -403,9 +403,11 @@ export default function MiceExperienceSections() {
         }
 
         .mice-center-copy {
-          max-width: 760px;
           margin: 0 auto;
           text-align: center;
+          width: 100%;
+          overflow: hidden;
+          position: relative;
         }
 
         /* Scrolling Tag Bar Styles */
@@ -615,8 +617,9 @@ export default function MiceExperienceSections() {
           aria-labelledby="estrutura-eventos-corporativos-title"
           className="mice-panel"
         >
-          <div className="mice-center-copy">
-            <div className="mice-scrolling-tags">
+          <div className="mice-hero-grid">
+            <div className="mice-center-copy">
+              <div className="mice-scrolling-tags">
               <div className="mice-scrolling-track">
                 <span className="mice-scrolling-tag">Buffet para eventos Corporativos</span>
                 <span className="mice-scrolling-tag">Buffet para feiras</span>
@@ -634,13 +637,16 @@ export default function MiceExperienceSections() {
                 <span className="mice-scrolling-tag">Buffet para eventos de grande porte</span>
               </div>
             </div>
-            <h2 id="estrutura-eventos-corporativos-title" className="mice-heading">
-              Estrutura para Eventos Corporativos
-            </h2>
-            <p className="mice-copy" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-              Atendimento especializado para eventos do universo MICE, incluindo feiras,
-              congressos e convenções empresariais.
-            </p>
+            <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+              <h2 id="estrutura-eventos-corporativos-title" className="mice-heading">
+                Estrutura para Eventos Corporativos
+              </h2>
+              <p className="mice-copy" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                Atendimento especializado para eventos do universo MICE, incluindo feiras,
+                congressos e convenções empresariais.
+              </p>
+            </div>
+            </div>
           </div>
 
           <div className="mice-grid mice-grid-structure">
