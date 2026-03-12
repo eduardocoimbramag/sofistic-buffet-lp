@@ -246,6 +246,9 @@ export default function MiceExperienceSections() {
         .mice-stand-intro {
           text-align: center;
           max-width: 100%;
+          width: 100%;
+          overflow: hidden;
+          position: relative;
         }
 
         .mice-highlights {
@@ -405,6 +408,66 @@ export default function MiceExperienceSections() {
           text-align: center;
         }
 
+        /* Scrolling Tag Bar Styles */
+        .mice-scrolling-tags {
+          position: relative;
+          width: 100%;
+          height: 36px;
+          margin: 0 0 1.5rem 0;
+          overflow: hidden;
+          contain: layout;
+          mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+        }
+
+        .mice-scrolling-track {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          white-space: nowrap;
+          animation: miceScrollTags 30s linear infinite;
+          will-change: transform;
+          width: max-content;
+          min-width: 100%;
+        }
+
+        .mice-scrolling-track:hover {
+          animation-play-state: paused;
+        }
+
+        .mice-scrolling-tag {
+          display: inline-flex;
+          align-items: center;
+          height: 32px;
+          padding: 0 0.875rem;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 0.7rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          backdrop-filter: blur(8px);
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .mice-scrolling-tag:hover {
+          background: rgba(227, 217, 146, 0.08);
+          border-color: rgba(227, 217, 146, 0.2);
+          color: #e3d992;
+        }
+
+        @keyframes miceScrollTags {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
         @media (min-width: 700px) {
           .mice-sections-shell {
             padding: 6rem 2rem;
@@ -468,7 +531,26 @@ export default function MiceExperienceSections() {
         >
           <div className="mice-hero-grid">
             <div className="mice-stand-intro">
-              <span className="mice-badge">MICE Experience</span>
+              <div className="mice-scrolling-tags">
+                <div className="mice-scrolling-track">
+                  <span className="mice-scrolling-tag">MICE EXPERIENCE</span>
+                  <span className="mice-scrolling-tag">Buffet para feiras</span>
+                  <span className="mice-scrolling-tag">Buffet para stand</span>
+                  <span className="mice-scrolling-tag">Catering para eventos corporativos</span>
+                  <span className="mice-scrolling-tag">Coffee break para stand</span>
+                  <span className="mice-scrolling-tag">Experiência gastronômica para marcas</span>
+                  <span className="mice-scrolling-tag">Buffet para eventos corporativos</span>
+                  <span className="mice-scrolling-tag">Buffet para feiras em Recife</span>
+                  <span className="mice-scrolling-tag">MICE EXPERIENCE</span>
+                  <span className="mice-scrolling-tag">Buffet para feiras</span>
+                  <span className="mice-scrolling-tag">Buffet para stand</span>
+                  <span className="mice-scrolling-tag">Catering para eventos corporativos</span>
+                  <span className="mice-scrolling-tag">Coffee break para stand</span>
+                  <span className="mice-scrolling-tag">Experiência gastronômica para marcas</span>
+                  <span className="mice-scrolling-tag">Buffet para eventos corporativos</span>
+                  <span className="mice-scrolling-tag">Buffet para feiras em Recife</span>
+                </div>
+              </div>
               <h2 id="experiencia-no-stand-title" className="mice-heading">
                 Experiência no Stand
               </h2>
