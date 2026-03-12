@@ -616,7 +616,24 @@ export default function MiceExperienceSections() {
           className="mice-panel"
         >
           <div className="mice-center-copy">
-            <span className="mice-badge">Estrutura especializada</span>
+            <div className="mice-scrolling-tags">
+              <div className="mice-scrolling-track">
+                <span className="mice-scrolling-tag">Buffet para eventos Corporativos</span>
+                <span className="mice-scrolling-tag">Buffet para feiras</span>
+                <span className="mice-scrolling-tag">Buffet para Congressos</span>
+                <span className="mice-scrolling-tag">Buffet para Exposições</span>
+                <span className="mice-scrolling-tag">Buffet para Lançamentos</span>
+                <span className="mice-scrolling-tag">Buffet para convenções</span>
+                <span className="mice-scrolling-tag">Buffet para eventos de grande porte</span>
+                <span className="mice-scrolling-tag">Buffet para eventos Corporativos</span>
+                <span className="mice-scrolling-tag">Buffet para feiras</span>
+                <span className="mice-scrolling-tag">Buffet para Congressos</span>
+                <span className="mice-scrolling-tag">Buffet para Exposições</span>
+                <span className="mice-scrolling-tag">Buffet para Lançamentos</span>
+                <span className="mice-scrolling-tag">Buffet para convenções</span>
+                <span className="mice-scrolling-tag">Buffet para eventos de grande porte</span>
+              </div>
+            </div>
             <h2 id="estrutura-eventos-corporativos-title" className="mice-heading">
               Estrutura para Eventos Corporativos
             </h2>
