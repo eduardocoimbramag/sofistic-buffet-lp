@@ -195,6 +195,7 @@ const SobreSection = ({
           margin-left: auto;
           margin-right: auto;
           color: ${colors.white};
+          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
           text-decoration: none;
           font-family: sans-serif;
           letter-spacing: 0.04em;

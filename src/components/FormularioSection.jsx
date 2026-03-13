@@ -457,6 +457,7 @@ export default function FormularioSection({
           border: 1px solid ${colors.gold};
           background: ${colors.gold};
           color: ${colors.white};
+          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
           border-radius: 999px;
           padding: 0.85rem 1.35rem;
           font-weight: 700;
