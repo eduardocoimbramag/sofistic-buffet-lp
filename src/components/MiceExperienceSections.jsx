@@ -129,7 +129,11 @@ export default function MiceExperienceSections() {
           padding: 5.5rem 1.5rem;
           background:
             radial-gradient(circle at top center, rgba(227, 217, 146, 0.08), transparent 22%),
-            linear-gradient(180deg, #050505 0%, #0b0b0b 46%, #050505 100%);
+            linear-gradient(180deg, rgba(5, 5, 5, 0.75) 0%, rgba(11, 11, 11, 0.7) 46%, rgba(5, 5, 5, 0.75) 100%),
+            url('/bgsecstand.jpg');
+          background-size: auto, auto, cover;
+          background-position: center, center, center;
+          background-repeat: no-repeat, no-repeat, no-repeat;
         }
 
         .mice-sections-shell::before,
@@ -521,9 +525,6 @@ export default function MiceExperienceSections() {
           }
         }
       `}</style>
-
-      <div className="mice-orb" />
-      <div className="mice-orb-right" />
 
       <div className="mice-sections-wrap">
         <motion.section
