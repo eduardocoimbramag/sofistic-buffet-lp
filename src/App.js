@@ -21,7 +21,10 @@ function App() {
       <div
         className="bg-sobre-servicos"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), url(${process.env.PUBLIC_URL}/backgroundsec3-4-5.jpg)`,
+          backgroundImage: `radial-gradient(circle at top center, rgba(227, 217, 146, 0.10), transparent 28%), linear-gradient(180deg, rgba(5, 5, 5, 0.78) 0%, rgba(11, 11, 11, 0.72) 46%, rgba(5, 5, 5, 0.82) 100%), url(${process.env.PUBLIC_URL}/backgroundsec3-4-5.jpg)`,
+          backgroundSize: 'auto, auto, cover',
+          backgroundPosition: 'center, center, center',
+          backgroundRepeat: 'no-repeat, no-repeat, no-repeat',
         }}
       >
         <SobreSection />

@@ -260,20 +260,53 @@ export default function FormularioSection({
           margin: 0;
           font-family: 'Playfair Display', serif;
           font-weight: 700;
-          color: ${colors.gold};
           line-height: 1.1;
           letter-spacing: -0.02em;
-          font-size: clamp(1.5rem, 4vw, 2.25rem);
+          font-size: clamp(1.7rem, 4.4vw, 2.65rem);
+          background: linear-gradient(180deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+        }
+
+        .form-title::after {
+          content: '';
+          display: block;
+          width: 80px;
+          height: 2px;
+          margin: 0.85rem auto 0;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          border-radius: 2px;
         }
 
         .form-card {
-          background: rgba(0, 0, 0, 0.925);
-          border: 1px solid ${colors.gold};
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-          border-radius: 1.25rem;
+          position: relative;
+          background:
+            radial-gradient(ellipse at top right, rgba(227, 217, 146, 0.08), transparent 38%),
+            linear-gradient(180deg, rgba(8, 8, 8, 0.94) 0%, rgba(0, 0, 0, 0.95) 100%);
+          border: 1px solid rgba(227, 217, 146, 0.45);
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(227, 217, 146, 0.08) inset;
+          border-radius: 1.5rem;
           padding: 1.75rem 1.25rem;
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          overflow: hidden;
+        }
+
+        .form-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 1.5rem;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(227, 217, 146, 0.55), rgba(227, 217, 146, 0) 38%, rgba(227, 217, 146, 0) 62%, rgba(227, 217, 146, 0.4));
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
         }
 
         .form-grid {
@@ -304,13 +337,21 @@ export default function FormularioSection({
         .form-textarea {
           width: 100%;
           color: ${colors.white};
-          background: rgba(0, 0, 0, 0.28);
-          border: 1px solid rgba(227, 217, 146, 0.18);
+          background: rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(227, 217, 146, 0.22);
           border-radius: 0.9rem;
-          padding: 0.9rem 0.95rem;
+          padding: 0.95rem 1rem;
           outline: none;
           box-shadow: 0 0 0 rgba(0,0,0,0);
-          transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+          transition:
+            border-color 280ms cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1),
+            background 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .form-input:hover,
+        .form-textarea:hover {
+          border-color: rgba(227, 217, 146, 0.42);
         }
 
         .form-textarea {
@@ -325,9 +366,9 @@ export default function FormularioSection({
 
         .form-input:focus,
         .form-textarea:focus {
-          border-color: rgba(227, 217, 146, 0.65);
-          box-shadow: 0 0 0 4px rgba(227, 217, 146, 0.16);
-          background: rgba(0, 0, 0, 0.34);
+          border-color: rgba(227, 217, 146, 0.85);
+          box-shadow: 0 0 0 4px rgba(227, 217, 146, 0.18), 0 8px 24px rgba(227, 217, 146, 0.08);
+          background: rgba(0, 0, 0, 0.5);
         }
 
         .form-error {
@@ -386,12 +427,26 @@ export default function FormularioSection({
           display: flex;
           align-items: center;
           gap: 0.55rem;
-          padding: 0.65rem 0.85rem;
+          padding: 0.65rem 0.95rem;
           border-radius: 999px;
-          border: 1px solid rgba(227, 217, 146, 0.2);
-          background: rgba(0, 0, 0, 0.22);
+          border: 1px solid rgba(227, 217, 146, 0.25);
+          background: rgba(0, 0, 0, 0.3);
           color: rgba(255, 255, 255, 0.92);
           width: fit-content;
+          cursor: pointer;
+          transition: border-color 280ms cubic-bezier(0.22, 1, 0.36, 1), background 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .form-radio:hover {
+          border-color: rgba(227, 217, 146, 0.55);
+          background: rgba(227, 217, 146, 0.06);
+          transform: translateY(-1px);
+        }
+
+        .form-radio:has(input:checked) {
+          border-color: rgba(227, 217, 146, 0.85);
+          background: rgba(227, 217, 146, 0.1);
+          box-shadow: 0 8px 22px rgba(227, 217, 146, 0.12);
         }
 
         .form-radio input {
@@ -454,37 +509,43 @@ export default function FormularioSection({
 
         .form-btn {
           appearance: none;
-          border: 1px solid ${colors.gold};
-          background: ${colors.gold};
-          color: ${colors.white};
-          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+          border: 1px solid rgba(227, 217, 146, 0.85);
+          background: linear-gradient(135deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
+          color: #1a1a1a;
           border-radius: 999px;
-          padding: 0.85rem 1.35rem;
+          padding: 0.95rem 1.6rem;
           font-weight: 700;
-          letter-spacing: 0.02em;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-size: 0.82rem;
           cursor: pointer;
           position: relative;
           overflow: hidden;
-          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .form-btn::before {
           content: '';
           position: absolute;
           inset: -40% -60%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
           transform: translateX(-60%) rotate(12deg);
-          transition: transform 450ms ease;
+          transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .form-btn:hover {
-          transform: translateY(-1px);
-          filter: brightness(1.02);
-          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+          transform: translateY(-3px) scale(1.02);
+          filter: brightness(1.04);
+          box-shadow: 0 22px 50px rgba(227, 217, 146, 0.34), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
         }
 
         .form-btn:hover::before {
           transform: translateX(60%) rotate(12deg);
+        }
+
+        .form-btn:active {
+          transform: translateY(-1px) scale(1);
         }
 
         .form-btn:focus-visible {

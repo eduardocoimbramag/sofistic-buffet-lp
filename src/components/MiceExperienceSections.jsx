@@ -226,11 +226,25 @@ export default function MiceExperienceSections() {
 
         .mice-heading {
           margin: 1.2rem 0 0;
-          color: #ffffff;
           font-family: 'Playfair Display', serif;
-          font-size: clamp(2rem, 4vw, 3.55rem);
+          font-size: clamp(2.1rem, 4.2vw, 3.65rem);
           line-height: 1.06;
           letter-spacing: -0.03em;
+          background: linear-gradient(180deg, #ffffff 0%, #f6efbf 55%, #e3d992 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          text-shadow: 0 12px 50px rgba(227, 217, 146, 0.12);
+        }
+
+        .mice-heading + .mice-heading-line {
+          display: block;
+          width: 96px;
+          height: 2px;
+          margin: 1.1rem auto 0;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          border-radius: 2px;
         }
 
         .mice-copy {
@@ -269,6 +283,23 @@ export default function MiceExperienceSections() {
           background: rgba(0,0,0,0.18);
           padding: 1rem 1rem 1.05rem;
           box-shadow: 0 14px 30px rgba(0,0,0,0.14);
+          transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), border-color 480ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mice-highlight-box:hover {
+          transform: translateY(-3px);
+          border-color: rgba(227, 217, 146, 0.35);
+          box-shadow: 0 22px 50px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(227, 217, 146, 0.15);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .mice-highlight-box {
+            transition: none;
+          }
+
+          .mice-highlight-box:hover {
+            transform: none;
+          }
         }
 
         .mice-highlight-title {
@@ -309,9 +340,15 @@ export default function MiceExperienceSections() {
           overflow: hidden;
           border-radius: 26px;
           border: 1px solid rgba(255,255,255,0.08);
-          background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+          background:
+            radial-gradient(ellipse at top right, rgba(227, 217, 146, 0.06), transparent 50%),
+            linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
           padding: 1.4rem;
           box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+          transition:
+            transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 480ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .mice-card::before {
@@ -322,6 +359,57 @@ export default function MiceExperienceSections() {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(227,217,146,0.7), transparent);
           opacity: 0.8;
+          transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mice-card::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -60%;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(110deg, transparent 0%, rgba(227, 217, 146, 0.18) 50%, transparent 100%);
+          transform: skewX(-18deg);
+          transition: left 900ms cubic-bezier(0.22, 1, 0.36, 1);
+          pointer-events: none;
+        }
+
+        .mice-card:hover {
+          border-color: rgba(227, 217, 146, 0.35);
+          box-shadow: 0 26px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(227, 217, 146, 0.18), 0 0 28px rgba(227, 217, 146, 0.1);
+        }
+
+        .mice-card:hover::before {
+          opacity: 1;
+        }
+
+        .mice-card:hover::after {
+          left: 130%;
+        }
+
+        .mice-card:hover .mice-icon-wrap {
+          background: rgba(227, 217, 146, 0.18);
+          border-color: rgba(227, 217, 146, 0.55);
+          box-shadow: 0 12px 30px rgba(227, 217, 146, 0.18), 0 0 18px rgba(227, 217, 146, 0.22);
+          transform: scale(1.05) rotate(-3deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .mice-card,
+          .mice-card::before,
+          .mice-card::after,
+          .mice-card .mice-icon-wrap {
+            transition: none;
+          }
+
+          .mice-card:hover::after {
+            left: -60%;
+          }
+
+          .mice-card:hover .mice-icon-wrap {
+            transform: none;
+          }
         }
 
         .mice-card-top {
@@ -340,8 +428,13 @@ export default function MiceExperienceSections() {
           justify-content: center;
           color: #e3d992;
           background: rgba(227, 217, 146, 0.1);
-          border: 1px solid rgba(227, 217, 146, 0.2);
+          border: 1px solid rgba(227, 217, 146, 0.25);
           box-shadow: 0 10px 30px rgba(227, 217, 146, 0.08);
+          transition:
+            background 480ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 480ms cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .mice-card-tag {
@@ -557,6 +650,7 @@ export default function MiceExperienceSections() {
               <h2 id="experiencia-no-stand-title" className="mice-heading">
                 Experiência no Stand
               </h2>
+              <span className="mice-heading-line" aria-hidden="true" />
               <p className="mice-copy">
                 Mais do que servir: criamos experiências em eventos MICE (Meetings,
                 Incentives, Conferences e Exhibitions). Cada detalhe influencia a percepção da sua
@@ -642,6 +736,7 @@ export default function MiceExperienceSections() {
               <h2 id="estrutura-eventos-corporativos-title" className="mice-heading">
                 Estrutura para Eventos Corporativos
               </h2>
+              <span className="mice-heading-line" aria-hidden="true" />
               <p className="mice-copy" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
                 Atendimento especializado para eventos do universo MICE, incluindo feiras,
                 congressos e convenções empresariais.

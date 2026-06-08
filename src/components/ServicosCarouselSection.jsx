@@ -297,10 +297,25 @@ export default function ServicosCarouselSection({
           margin: 0;
           font-family: 'Playfair Display', serif;
           font-weight: 700;
-          color: ${colors.gold};
           line-height: 1.1;
           letter-spacing: -0.02em;
-          font-size: clamp(1.5rem, 4vw, 2.25rem);
+          font-size: clamp(1.7rem, 4.4vw, 2.65rem);
+          background: linear-gradient(180deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          position: relative;
+        }
+
+        .servicos-title::after {
+          content: '';
+          display: block;
+          width: 80px;
+          height: 2px;
+          margin: 0.85rem auto 0;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          border-radius: 2px;
         }
 
         .servicos-viewport {
@@ -326,12 +341,15 @@ export default function ServicosCarouselSection({
         }
 
         .servicos-card {
+          position: relative;
           flex: 0 0 var(--cardW);
           margin-right: var(--gap);
-          background: rgba(0, 0, 0, 0.925);
-          border: 1px solid ${colors.gold};
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-          border-radius: 1.25rem;
+          background:
+            radial-gradient(ellipse at top, rgba(227, 217, 146, 0.05), transparent 55%),
+            linear-gradient(180deg, rgba(12, 12, 12, 0.96) 0%, rgba(0, 0, 0, 0.96) 100%);
+          border: 1px solid rgba(227, 217, 146, 0.35);
+          box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+          border-radius: 1.4rem;
           padding: 1.25rem 1.25rem 1.5rem;
           min-height: 18rem;
           display: flex;
@@ -341,25 +359,80 @@ export default function ServicosCarouselSection({
           text-align: center;
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+          transition:
+            transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 380ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 380ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 380ms cubic-bezier(0.22, 1, 0.36, 1);
           transform-origin: center;
+          overflow: hidden;
+          opacity: 0.7;
+        }
+
+        .servicos-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 1.4rem;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(227, 217, 146, 0.5), rgba(227, 217, 146, 0) 35%, rgba(227, 217, 146, 0) 65%, rgba(227, 217, 146, 0.5));
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0;
+          transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1);
+          pointer-events: none;
         }
 
         .servicos-card.is-active {
           border-color: rgba(227, 217, 146, 0.9);
-          box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55), 0 0 35px rgba(227, 217, 146, 0.15);
           z-index: 2;
+          opacity: 1;
+          transform: scale(1.02);
+        }
+
+        .servicos-card.is-active::before {
+          opacity: 1;
+        }
+
+        .servicos-card:hover {
+          opacity: 1;
+        }
+
+        .servicos-card:hover .servicos-card-media {
+          transform: scale(1.05);
+          border-color: rgba(227, 217, 146, 0.55);
+        }
+
+        .servicos-card-media-wrap {
+          position: relative;
+          width: 100%;
+          height: 8.5rem;
+          margin: 0 0 1rem;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+
+        .servicos-card-media-wrap::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.45) 100%);
+          pointer-events: none;
         }
 
         .servicos-card-media {
           width: 100%;
-          height: 8.5rem;
+          height: 100%;
           border-radius: 1rem;
           display: block;
-          margin: 0 0 1rem;
           object-fit: cover;
           border: 1px solid rgba(227, 217, 146, 0.3);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+          transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), border-color 380ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .servicos-card-body {
@@ -373,17 +446,19 @@ export default function ServicosCarouselSection({
 
         .servicos-card-title {
           margin: 0;
-          color: ${colors.white};
-          font-weight: 600;
-          font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-          letter-spacing: 0.01em;
+          font-family: 'Playfair Display', serif;
+          color: #f6efbf;
+          font-weight: 700;
+          font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+          letter-spacing: 0.005em;
+          line-height: 1.2;
         }
 
         .servicos-card-desc {
           margin: 0.65rem 0 0;
-          color: rgba(255, 255, 255, 0.82);
-          font-size: 0.95rem;
-          line-height: 1.35;
+          color: rgba(255, 255, 255, 0.78);
+          font-size: 0.92rem;
+          line-height: 1.5;
         }
 
         .servicos-card-cta {
@@ -394,36 +469,37 @@ export default function ServicosCarouselSection({
           align-self: center;
           margin-left: auto;
           margin-right: auto;
-          color: ${colors.white};
-          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+          color: #1a1a1a;
           text-decoration: none;
           font-family: sans-serif;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           font-weight: 700;
-          font-size: 0.82rem;
-          padding: 0.55rem 0.95rem;
+          font-size: 0.78rem;
+          padding: 0.6rem 1.1rem;
           border-radius: 999px;
-          border: 1px solid ${colors.gold};
-          background: ${colors.gold};
+          border: 1px solid rgba(227, 217, 146, 0.85);
+          background: linear-gradient(135deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
           position: relative;
           overflow: hidden;
-          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+          box-shadow: 0 10px 25px rgba(227, 217, 146, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms cubic-bezier(0.22, 1, 0.36, 1);
+          cursor: pointer;
         }
 
         .servicos-card-cta::before {
           content: '';
           position: absolute;
           inset: -40% -60%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
           transform: translateX(-60%) rotate(12deg);
-          transition: transform 450ms ease;
+          transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .servicos-card-cta:hover {
-          transform: translateY(-1px);
-          filter: brightness(1.02);
-          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+          transform: translateY(-2px) scale(1.02);
+          filter: brightness(1.04);
+          box-shadow: 0 18px 38px rgba(227, 217, 146, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
         }
 
         .servicos-card-cta:hover::before {
@@ -433,7 +509,7 @@ export default function ServicosCarouselSection({
         .servicos-card-cta:focus-visible {
           outline: 2px solid ${colors.gold};
           outline-offset: 4px;
-          border-radius: 0.25rem;
+          border-radius: 999px;
         }
 
         .servicos-controls {
@@ -445,28 +521,28 @@ export default function ServicosCarouselSection({
 
         .servicos-arrow-btn {
           appearance: none;
-          width: 44px;
-          height: 44px;
+          width: 48px;
+          height: 48px;
           border-radius: 999px;
-          border: 1px solid ${colors.gold};
-          background: ${colors.gold};
-          color: ${colors.white};
-          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+          border: 1px solid rgba(227, 217, 146, 0.85);
+          background: linear-gradient(135deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
+          color: #1a1a1a;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+          box-shadow: 0 12px 28px rgba(227, 217, 146, 0.20), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .servicos-arrow-btn:hover {
-          transform: translateY(-1px);
-          filter: brightness(1.02);
-          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+          transform: translateY(-2px) scale(1.05);
+          filter: brightness(1.04);
+          box-shadow: 0 18px 38px rgba(227, 217, 146, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
         }
 
         .servicos-arrow-btn:active {
-          transform: translateY(0px) scale(0.99);
+          transform: translateY(0px) scale(0.97);
         }
 
         .servicos-arrow-btn:focus-visible {
@@ -486,13 +562,14 @@ export default function ServicosCarouselSection({
           width: 7px;
           height: 7px;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.95);
-          opacity: 0.85;
+          background: rgba(255, 255, 255, 0.4);
+          transition: width 320ms cubic-bezier(0.22, 1, 0.36, 1), background 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .servicos-dot.is-active {
+          width: 22px;
           background: ${colors.gold};
-          opacity: 1;
+          box-shadow: 0 0 12px rgba(227, 217, 146, 0.55);
         }
 
         /* Mobile-first sizing */
@@ -575,18 +652,20 @@ export default function ServicosCarouselSection({
                   className={`servicos-card${isActive ? ' is-active' : ''}`}
                   aria-label={item.title}
                 >
-                  <img
-                    className="servicos-card-media"
-                    src={getServiceImageSrc(item.title)}
-                    alt={item.title}
-                    loading="lazy"
-                    draggable={false}
-                    onError={(e) => {
-                      if (e.currentTarget.dataset.fallbackApplied) return;
-                      e.currentTarget.dataset.fallbackApplied = '1';
-                      e.currentTarget.src = getPlaceholderImageSrc(item.title);
-                    }}
-                  />
+                  <div className="servicos-card-media-wrap">
+                    <img
+                      className="servicos-card-media"
+                      src={getServiceImageSrc(item.title)}
+                      alt={item.title}
+                      loading="lazy"
+                      draggable={false}
+                      onError={(e) => {
+                        if (e.currentTarget.dataset.fallbackApplied) return;
+                        e.currentTarget.dataset.fallbackApplied = '1';
+                        e.currentTarget.src = getPlaceholderImageSrc(item.title);
+                      }}
+                    />
+                  </div>
                   <div className="servicos-card-body">
                     <h3 className="servicos-card-title">{item.title}</h3>
                     <p className="servicos-card-desc">{item.description}</p>

@@ -27,10 +27,11 @@ export default function RodapeSection({
   const footerStyles = useMemo(
     () => ({
       width: '100%',
-      background: colors.white,
-      borderTop: `2px solid ${colors.gold}`,
+      background: 'linear-gradient(180deg, #fdfaee 0%, #ffffff 60%)',
+      borderTop: `1px solid ${colors.gold}`,
+      position: 'relative',
     }),
-    [colors.gold, colors.white]
+    [colors.gold]
   );
 
   const containerStyles = useMemo(
@@ -45,12 +46,36 @@ export default function RodapeSection({
   const year = new Date().getFullYear();
 
   return (
-    <footer style={footerStyles} className={className} aria-label="Rodapé">
+    <footer style={footerStyles} className={`footer-shell ${className}`} aria-label="Rodapé">
       <style>{`
+        .footer-shell::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: -1px;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          pointer-events: none;
+        }
+
         .footer-grid {
           display: grid;
           grid-template-columns: repeat(1, minmax(0, 1fr));
           gap: 1.75rem;
+        }
+
+        .footer-brand {
+          font-family: 'Playfair Display', serif;
+          font-weight: 700;
+          font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+          margin: 0 0 0.65rem;
+          letter-spacing: -0.02em;
+          background: linear-gradient(135deg, #1f2937 0%, #c9b878 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
         }
 
         .footer-title {
@@ -60,13 +85,25 @@ export default function RodapeSection({
           color: ${colors.black};
           line-height: 1.15;
           letter-spacing: -0.02em;
-          font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+          font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+          position: relative;
+          display: inline-block;
+        }
+
+        .footer-title::after {
+          content: '';
+          display: block;
+          width: 32px;
+          height: 2px;
+          margin-top: 0.45rem;
+          background: linear-gradient(90deg, ${colors.gold}, transparent);
+          border-radius: 2px;
         }
 
         .footer-text {
           margin: 0;
-          color: rgba(0, 0, 0, 0.78);
-          line-height: 1.55;
+          color: rgba(0, 0, 0, 0.72);
+          line-height: 1.6;
           font-size: 0.98rem;
         }
 
@@ -75,19 +112,39 @@ export default function RodapeSection({
           padding: 0;
           list-style: none;
           display: grid;
-          gap: 0.6rem;
+          gap: 0.55rem;
         }
 
         .footer-link {
-          color: rgba(0, 0, 0, 0.82);
+          color: rgba(0, 0, 0, 0.78);
           text-decoration: none;
           font-weight: 600;
           letter-spacing: 0.01em;
-          transition: color 160ms ease, text-decoration-color 160ms ease;
+          position: relative;
+          display: inline-block;
+          padding-left: 0;
+          transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1), padding-left 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .footer-link::before {
+          content: '';
+          position: absolute;
+          left: -2px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 1px;
+          background: ${colors.gold};
+          transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .footer-link:hover {
-          color: ${colors.gold};
+          color: #b9a669;
+          padding-left: 14px;
+        }
+
+        .footer-link:hover::before {
+          width: 10px;
         }
 
         .footer-link:focus-visible {
@@ -105,13 +162,14 @@ export default function RodapeSection({
         }
 
         .footer-meta a {
-          color: rgba(0, 0, 0, 0.82);
+          color: rgba(0, 0, 0, 0.78);
           text-decoration: none;
           font-weight: 600;
+          transition: color 280ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .footer-meta a:hover {
-          color: ${colors.gold};
+          color: #b9a669;
         }
 
         .footer-sub {
@@ -161,7 +219,7 @@ export default function RodapeSection({
       <div style={containerStyles}>
         <div className="footer-grid">
           <div>
-            <h3 className="footer-title">{brandName}</h3>
+            <h3 className="footer-brand">{brandName}</h3>
             <p className="footer-text">{tagline}</p>
           </div>
 

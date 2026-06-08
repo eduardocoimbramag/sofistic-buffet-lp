@@ -39,25 +39,45 @@ const SobreSection = ({
   };
 
   const animationBase = {
-    viewport: { once: true, amount: 0.35 }
+    viewport: { once: true, amount: 0.3 }
   };
 
+  const ease = [0.22, 1, 0.36, 1];
+
   const titleAnimation = {
-    initial: { opacity: 0, y: 16 },
-    whileInView: { opacity: 1, y: 0 },
-    transition: { duration: 0.7 }
+    initial: { opacity: 0, y: 22, filter: 'blur(6px)' },
+    whileInView: { opacity: 1, y: 0, filter: 'blur(0px)' },
+    transition: { duration: 0.85, ease }
   };
 
   const mediaAnimation = {
-    initial: { opacity: 0, scale: 0.98 },
-    whileInView: { opacity: 1, scale: 1 },
-    transition: { duration: 0.7, delay: 0.05 }
+    initial: { opacity: 0, scale: 0.94, y: 18 },
+    whileInView: { opacity: 1, scale: 1, y: 0 },
+    transition: { duration: 0.9, delay: 0.1, ease }
   };
 
   const contentAnimation = {
-    initial: { opacity: 0, y: 16 },
+    initial: { opacity: 0, y: 22 },
     whileInView: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, delay: 0.1 }
+    transition: { duration: 0.85, delay: 0.15, ease }
+  };
+
+  const listContainerAnim = {
+    initial: 'hidden',
+    whileInView: 'visible',
+    variants: {
+      hidden: {},
+      visible: {
+        transition: { staggerChildren: 0.09, delayChildren: 0.25 }
+      }
+    }
+  };
+
+  const listItemAnim = {
+    variants: {
+      hidden: { opacity: 0, x: -14 },
+      visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease } }
+    }
   };
 
   const handleCtaClick = (e) => {
@@ -84,18 +104,50 @@ const SobreSection = ({
         }
 
         .about-panel {
-          background: rgba(0, 0, 0, 0.925);
-          border: 1px solid ${colors.gold};
-          border-radius: 1.25rem;
-          padding: 1rem 0.75rem;
+          position: relative;
+          background:
+            radial-gradient(ellipse at top left, rgba(227, 217, 146, 0.10), transparent 35%),
+            linear-gradient(180deg, rgba(8, 8, 8, 0.94) 0%, rgba(0, 0, 0, 0.94) 100%);
+          border: 1px solid rgba(227, 217, 146, 0.45);
+          border-radius: 1.5rem;
+          padding: 1.5rem 1rem;
           max-width: 74rem;
           margin-left: auto;
           margin-right: auto;
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(227, 217, 146, 0.06) inset;
+          overflow: hidden;
+        }
+
+        .about-panel::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 1.5rem;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(227, 217, 146, 0.55), rgba(227, 217, 146, 0) 38%, rgba(227, 217, 146, 0) 62%, rgba(227, 217, 146, 0.4));
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+
+        .about-panel::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: -1px;
+          transform: translateX(-50%);
+          width: 60%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          pointer-events: none;
         }
 
         @media (min-width: 768px) {
           .about-panel {
-            padding: 1.25rem 1rem;
+            padding: 2rem 1.5rem;
           }
         }
 
@@ -141,13 +193,27 @@ const SobreSection = ({
 
         .about-h2 {
           font-family: 'Playfair Display', serif;
-          color: ${colors.gold};
           font-weight: 700;
           line-height: 1.1;
           letter-spacing: -0.02em;
-          font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+          font-size: clamp(1.55rem, 3.8vw, 2.65rem);
           margin: 0;
           text-align: center;
+          background: linear-gradient(180deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          text-shadow: 0 8px 30px rgba(227, 217, 146, 0.12);
+        }
+
+        .about-h2 + .about-h2-line {
+          display: block;
+          width: 96px;
+          height: 2px;
+          margin: 0.85rem auto 0;
+          background: linear-gradient(90deg, transparent, rgba(227, 217, 146, 0.85), transparent);
+          border-radius: 2px;
         }
 
         .about-content {
@@ -180,59 +246,104 @@ const SobreSection = ({
         .about-list-item {
           display: flex;
           align-items: flex-start;
-          gap: 0.6rem;
-          color: rgba(255, 255, 255, 0.90);
+          gap: 0.7rem;
+          color: rgba(255, 255, 255, 0.92);
           font-family: sans-serif;
           line-height: 1.6;
+          padding: 0.35rem 0.4rem;
+          border-radius: 0.55rem;
+          transition: background 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .about-list-item:hover {
+          background: rgba(227, 217, 146, 0.06);
+          transform: translateX(4px);
+        }
+
+        .about-list-item .about-list-icon {
+          margin-top: 0.15rem;
+          width: 22px;
+          height: 22px;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(227, 217, 146, 0.12);
+          border: 1px solid rgba(227, 217, 146, 0.35);
+          flex: 0 0 auto;
+          transition: background 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+        }
+
+        .about-list-item:hover .about-list-icon {
+          background: rgba(227, 217, 146, 0.22);
+          border-color: rgba(227, 217, 146, 0.7);
+          box-shadow: 0 0 14px rgba(227, 217, 146, 0.25);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .about-list-item,
+          .about-list-item .about-list-icon {
+            transition: none;
+          }
+
+          .about-list-item:hover {
+            transform: none;
+          }
         }
 
         .about-cta {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          margin-top: 1.1rem;
+          margin-top: 1.4rem;
           align-self: center;
           margin-left: auto;
           margin-right: auto;
-          color: ${colors.white};
-          text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+          color: #1a1a1a;
           text-decoration: none;
           font-family: sans-serif;
-          letter-spacing: 0.04em;
+          letter-spacing: 0.18em;
           text-transform: uppercase;
-          font-weight: 600;
-          padding: 0.7rem 1.1rem;
+          font-weight: 700;
+          font-size: 0.82rem;
+          padding: 0.95rem 1.6rem;
           border-radius: 999px;
-          border: 1px solid ${colors.gold};
-          background: ${colors.gold};
+          border: 1px solid rgba(227, 217, 146, 0.85);
+          background: linear-gradient(135deg, #f6efbf 0%, #e3d992 55%, #c9b878 100%);
           position: relative;
           overflow: hidden;
-          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+          transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms cubic-bezier(0.22, 1, 0.36, 1);
+          cursor: pointer;
         }
 
         .about-cta::before {
           content: '';
           position: absolute;
           inset: -40% -60%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
           transform: translateX(-60%) rotate(12deg);
-          transition: transform 450ms ease;
+          transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .about-cta:hover {
-          transform: translateY(-1px);
-          filter: brightness(1.02);
-          box-shadow: 0 14px 30px rgba(227, 217, 146, 0.22);
+          transform: translateY(-3px) scale(1.02);
+          filter: brightness(1.04);
+          box-shadow: 0 22px 50px rgba(227, 217, 146, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
         }
 
         .about-cta:hover::before {
           transform: translateX(60%) rotate(12deg);
         }
 
+        .about-cta:active {
+          transform: translateY(-1px) scale(1);
+        }
+
         .about-cta:focus-visible {
           outline: 2px solid ${colors.gold};
           outline-offset: 4px;
-          border-radius: 0.25rem;
+          border-radius: 999px;
         }
 
         .about-media-wrap {
@@ -260,15 +371,33 @@ const SobreSection = ({
           }
         }
 
+        .about-media-wrap::before {
+          content: '';
+          position: absolute;
+          inset: -10px;
+          background: radial-gradient(ellipse at center, rgba(227, 217, 146, 0.22), transparent 70%);
+          filter: blur(20px);
+          opacity: 0.85;
+          z-index: 0;
+          pointer-events: none;
+        }
+
         .about-video {
           position: relative;
           z-index: 1;
           width: 100%;
           height: 100%;
-          border-radius: 1.25rem;
+          border-radius: 1.4rem;
           object-fit: cover;
           background: #000;
-          border: 2px solid ${colors.gold};
+          border: 1px solid rgba(227, 217, 146, 0.6);
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(227, 217, 146, 0.25) inset;
+          transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .about-media-wrap:hover .about-video {
+          transform: scale(1.015);
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(227, 217, 146, 0.45) inset, 0 0 35px rgba(227, 217, 146, 0.18);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -285,6 +414,7 @@ const SobreSection = ({
               <h2 className="about-h2">
                 {title} <span style={{ color: colors.gold }}>{region}</span>
               </h2>
+              <span className="about-h2-line" aria-hidden="true" />
             </motion.div>
 
             <motion.div className="about-media" {...mediaAnimation} {...animationBase}>
@@ -306,16 +436,24 @@ const SobreSection = ({
             <motion.div className="about-content" {...contentAnimation} {...animationBase}>
               <p className="about-description">{description}</p>
 
-              <ul className="about-list">
+              <motion.ul
+                className="about-list"
+                {...listContainerAnim}
+                viewport={{ once: true, amount: 0.2 }}
+              >
                 {highlights.map((text, idx) => (
-                  <li key={`${idx}-${text}`} className="about-list-item">
-                    <span aria-hidden="true" style={{ marginTop: '0.15rem' }}>
-                      <Check size={18} color={colors.gold} />
+                  <motion.li
+                    key={`${idx}-${text}`}
+                    className="about-list-item"
+                    {...listItemAnim}
+                  >
+                    <span className="about-list-icon" aria-hidden="true">
+                      <Check size={14} color={colors.gold} strokeWidth={2.5} />
                     </span>
                     <span>{text}</span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
 
               <a className="about-cta" href={ctaHref} onClick={handleCtaClick}>
                 {ctaLabel}
